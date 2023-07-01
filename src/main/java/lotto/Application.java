@@ -15,7 +15,6 @@ public class Application {
     private static final int FIVE_AND_BONUS_PRIZE_MONEY = 30_000_000;
     private static final int SIX_PRIZE_MONEY = 2_000_000_000;
     public static void main(String[] args) {
-        System.out.println("구입금액을 입력해 주세요.");
         try {
             int purchasePrice = inputPurchasePrice();
             Lotto[] lotteries = getLotteryTickets(purchasePrice);
@@ -27,6 +26,7 @@ public class Application {
     }
 
     public static int inputPurchasePrice() {
+        System.out.println("구입금액을 입력해 주세요.");
         String purchasePrice = readLine();
         if (!isRightInputForPurchasePrice(purchasePrice)) {
             System.out.println("[ERROR] 구입금액은 숫자 형식으로 1,000에 나누어 떨어지는 숫자여야 합니다.");
