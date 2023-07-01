@@ -24,10 +24,17 @@ public class Application {
 
     public static int inputPurchasePrice() {
         System.out.println("구입금액을 입력해 주세요.");
-        int price = Integer.parseInt(readLine());
-        if (price % 1000 != 0) throw new IllegalArgumentException();
+        String purchasePrice = readLine();
+        if (!isRightInputForPurchasePrice(purchasePrice)) {
+            System.out.println("[ERROR] 구입금액은 숫자 형식으로 1,000에 나누어 떨어지는 숫자여야 합니다.");
+            throw new IllegalArgumentException();
+        }
+        return Integer.parseInt(purchasePrice);
+    }
 
-        return price;
+    public static boolean isRightInputForPurchasePrice(String purchasePrice) {
+        if (!purchasePrice.matches("[0-9]*")) return false;
+        return Integer.parseInt(purchasePrice) % 1000 == 0;
     }
 
     public static Lotto[] getLotteryTickets(int purchasePrice) {
