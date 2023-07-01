@@ -53,7 +53,7 @@ class ApplicationTest extends NsTest {
                 () -> validateWinningNumbersFormat(testWinningNumbers));
     }
 
-    @DisplayName("당첨 번호가 범위를 넘으면 예외가 발생한다.")
+    @DisplayName("번호가 범위를 넘으면 예외가 발생한다.")
     @ValueSource(ints = {0, 46})
     @ParameterizedTest
     void createNumberByOverRange(int testNumber) {
