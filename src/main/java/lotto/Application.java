@@ -95,19 +95,19 @@ public class Application {
         return winningNumbersList;
     }
 
-    public static void validateNumberRange(int number) {
-        if (number < MINIMUM_NUMBER_RANGE || number > MAXIMUM_NUMBER_RANGE) {
-            System.out.println("[ERROR] 번호의 범위는 1부터 45까지여야 합니다.");
-            throw new IllegalArgumentException();
-        }
-    }
-
     public static void validateDuplicateNumber(
             List<Integer> winningNumbersList,
             int number
     ) {
         if (winningNumbersList.contains(number)) {
             System.out.println("[ERROR] 당첨 번호는 중복 숫자가 없어야 합니다.");
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public static void validateNumberRange(int number) {
+        if (number < MINIMUM_NUMBER_RANGE || number > MAXIMUM_NUMBER_RANGE) {
+            System.out.println("[ERROR] 번호의 범위는 1부터 45까지여야 합니다.");
             throw new IllegalArgumentException();
         }
     }

@@ -71,6 +71,14 @@ class ApplicationTest extends NsTest {
                 () -> validateDuplicateNumber(testWinningNumbersList, 6));
     }
 
+    @DisplayName("당첨 숫자의 수는 반드시 6개여야 한다.")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 7})
+    @ParameterizedTest
+    void validateWinningNumbersSizeTest(int testSize) {
+        assertThrows(IllegalArgumentException.class,
+                () -> validateWinningNumbersSize(testSize));
+    }
+
     @Test
     void 기능_테스트() {
         assertRandomUniqueNumbersInRangeTest(
