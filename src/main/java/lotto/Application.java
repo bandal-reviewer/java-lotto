@@ -26,7 +26,9 @@ public class Application {
             System.out.println("당첨 번호를 입력해주세요.");
             List<Integer> winningNumbersList = inputWinningNumbers();
 
-            int bonusNumber = inputBonusNumber(winningNumbersList);
+            int bonusNumber = inputBonusNumber();
+            winningNumbersList.add(bonusNumber);
+
             setGameOver(purchasePrice, lotteries, winningNumbersList, bonusNumber);
         } catch (IllegalArgumentException ignored) {
         }
@@ -103,16 +105,18 @@ public class Application {
         }
     }
 
-    public static int inputBonusNumber(List<Integer> winningNumbersList) {
+    public static int inputBonusNumber() {
         System.out.println("보너스 번호를 입력해 주세요.");
-        int bonusNumber = Integer.parseInt(readLine());
-        if (bonusNumber < MINIMUM_NUMBER_RANGE || bonusNumber > MAXIMUM_NUMBER_RANGE) {
+        String bonusNumber = readLine();
+        if (!bonusNumber.matches("[0-9]+")) {
+            System.out.println("[ERROR] 보너스 번호는 정수로 입력해주셔야 합니다.");
+            throw new IllegalArgumentException();
+        }
+        if (Integer.parseInt(bonusNumber) < MINIMUM_NUMBER_RANGE || Integer.parseInt(bonusNumber) > MAXIMUM_NUMBER_RANGE) {
             System.out.println("[ERROR] 보너스 번호의 범위는 1부터 45까지여야 합니다.");
             throw new IllegalArgumentException();
         }
-        winningNumbersList.add(bonusNumber);
-
-        return bonusNumber;
+        return Integer.parseInt(bonusNumber);
     }
 
     public static void setGameOver(
