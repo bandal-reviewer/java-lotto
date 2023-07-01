@@ -5,6 +5,7 @@ import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static camp.nextstep.edu.missionutils.Console.readLine;
 
@@ -53,9 +54,9 @@ public class Application {
     }
 
     public static List<Integer> getRandomNumberList() {
-        List<Integer> list = Randoms.pickUniqueNumbersInRange(1, 45, 6);
-        Collections.sort(list);
-        return list;
+        return Randoms.pickUniqueNumbersInRange(1, 45, 6).stream()
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public static List<Integer> inputPrizeNumbers() {
