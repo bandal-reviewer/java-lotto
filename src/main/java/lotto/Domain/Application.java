@@ -1,6 +1,8 @@
-package lotto;
+package lotto.Domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import lotto.Domain.Lotto;
+import lotto.UI.Input;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,26 +19,23 @@ public class Application {
     private static final int SIX_WINNING_MONEY_RATIO = 2_000_000;
     public static void main(String[] args) {
         try {
-            System.out.println("구입금액을 입력해 주세요.");
-            int purchasePrice = inputPurchasePrice();
+            int purchasePrice = readPurchasePrice();
 
             int purchaseLotteryCount = purchasePrice / 1000;
             System.out.println(purchaseLotteryCount + "개를 구매했습니다.");
             Lotto[] lotteries = getLotteryTickets(purchaseLotteryCount);
 
-            System.out.println("당첨 번호를 입력해주세요.");
-            List<Integer> winningNumbersList = inputWinningNumbers();
+            List<Integer> winningNumbersList = readWinningNumbers();
 
-            System.out.println("보너스 번호를 입력해 주세요.");
-            int bonusNumber = inputBonusNumber(winningNumbersList);
+            int bonusNumber = readBonusNumber(winningNumbersList);
 
             setGameOver(purchaseLotteryCount, lotteries, winningNumbersList, bonusNumber);
         } catch (IllegalArgumentException ignored) {
         }
     }
 
-    public static int inputPurchasePrice() {
-        String purchasePrice = readLine();
+    public static int readPurchasePrice() {
+        String purchasePrice = Input.inputPurchasePrice();
         validatePurchasePrice(purchasePrice);
         return Integer.parseInt(purchasePrice);
     }
@@ -66,8 +65,8 @@ public class Application {
         return Randoms.pickUniqueNumbersInRange(1, 45, 6);
     }
 
-    public static List<Integer> inputWinningNumbers() {
-        String winningNumbers = readLine();
+    public static List<Integer> readWinningNumbers() {
+        String winningNumbers = Input.inputWinningNumbers();
         validateWinningNumbersFormat(winningNumbers);
 
         List<Integer> winningNumbersList = saveWinningNumbersList(winningNumbers);
@@ -119,9 +118,10 @@ public class Application {
         }
     }
 
-    public static int inputBonusNumber(List<Integer> winningNumbersList) {
-        String bonusNumber = readLine();
+    public static int readBonusNumber(List<Integer> winningNumbersList) {
+        String bonusNumber = Input.inputBonusNumber();
         validateBonusNumberFormat(bonusNumber);
+
         int integerTypeBonusNumber = Integer.parseInt(bonusNumber);
         validateDuplicateNumber(winningNumbersList, integerTypeBonusNumber);
         validateNumberRange(integerTypeBonusNumber);
