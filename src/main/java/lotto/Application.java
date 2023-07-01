@@ -13,6 +13,7 @@ public class Application {
         int purchasePrice = inputPurchasePrice();
         Lotto[] lotteries = getLotteryTickets(purchasePrice);
         List<Integer> prizeNumbersList = inputPrizeNumbers();
+        int bonusNumber = inputBonusNumber(prizeNumbersList);
     }
 
     public static int inputPurchasePrice() {
@@ -60,4 +61,12 @@ public class Application {
 //
 //        return true;
 //    }
+
+    public static int inputBonusNumber(List<Integer> prizeNumbersList) {
+        System.out.println("보너스 번호를 입력해 주세요.");
+        int bonusNumber = Integer.parseInt(readLine());
+        prizeNumbersList.add(bonusNumber);
+
+        return bonusNumber;
+    }
 }
