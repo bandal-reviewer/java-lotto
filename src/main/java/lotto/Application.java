@@ -68,10 +68,7 @@ public class Application {
 
     public static List<Integer> inputWinningNumbers() {
         String winningNumbers = readLine();
-        if (!winningNumbers.matches("[0-9,]+")) {
-            System.out.println("[ERROR] 당첨 번호는 띄어쓰기 없이 ,로 구분하여 작성해야 합니다.");
-            throw new IllegalArgumentException();
-        }
+        validateWinningNumbersFormat(winningNumbers);
 
         List<Integer> winningNumbersList = saveWinningNumbersList(winningNumbers);
         if (winningNumbersList.size() != 6) {
@@ -79,6 +76,13 @@ public class Application {
             throw new IllegalArgumentException();
         }
         return winningNumbersList;
+    }
+
+    public static void validateWinningNumbersFormat(String winningNumbers) {
+        if (!winningNumbers.matches("[0-9,]+")) {
+            System.out.println("[ERROR] 당첨 번호는 띄어쓰기 없이 ,로 구분하여 작성해야 합니다.");
+            throw new IllegalArgumentException();
+        }
     }
 
     public static List<Integer> saveWinningNumbersList(String winningNumbers) {
