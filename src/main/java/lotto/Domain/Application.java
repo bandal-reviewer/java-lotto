@@ -1,13 +1,18 @@
 package lotto.Domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import lotto.Domain.Lotto;
 import lotto.UI.Input;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static camp.nextstep.edu.missionutils.Console.readLine;
+import static lotto.UI.Output.outputBonusNumberFormat;
+import static lotto.UI.Output.outputNumberDuplicate;
+import static lotto.UI.Output.outputNumberRange;
+import static lotto.UI.Output.outputPurchasePriceDivide;
+import static lotto.UI.Output.outputPurchasePriceInteger;
+import static lotto.UI.Output.outputWinningNumbersFormat;
+import static lotto.UI.Output.outputWinningNumbersSize;
 
 public class Application {
     private static final int MINIMUM_NUMBER_RANGE = 1;
@@ -42,12 +47,12 @@ public class Application {
 
     public static void validatePurchasePrice(String purchasePrice) {
         if (!purchasePrice.matches("[0-9]+")) {
-            System.out.println("[ERROR] 구입금액은 숫자로 입력해야 합니다.");
+            outputPurchasePriceInteger();
             throw new IllegalArgumentException();
         }
 
         if (Integer.parseInt(purchasePrice) % 1000 != 0) {
-            System.out.println("[ERROR] 구입금액은 1,000에 나누어 떨어지는 숫자여야 합니다.");
+            outputPurchasePriceDivide();
             throw new IllegalArgumentException();
         }
     }
@@ -76,7 +81,7 @@ public class Application {
 
     public static void validateWinningNumbersFormat(String winningNumbers) {
         if (!winningNumbers.matches("[0-9,]+")) {
-            System.out.println("[ERROR] 당첨 번호는 띄어쓰기 없이 ,로 구분하여 작성해야 합니다.");
+            outputWinningNumbersFormat();
             throw new IllegalArgumentException();
         }
     }
@@ -99,21 +104,21 @@ public class Application {
             int number
     ) {
         if (winningNumbersList.contains(number)) {
-            System.out.println("[ERROR] 당첨 번호는 중복 숫자가 없어야 합니다.");
+            outputNumberDuplicate();
             throw new IllegalArgumentException();
         }
     }
 
     public static void validateNumberRange(int number) {
         if (number < MINIMUM_NUMBER_RANGE || number > MAXIMUM_NUMBER_RANGE) {
-            System.out.println("[ERROR] 번호의 범위는 1부터 45까지여야 합니다.");
+            outputNumberRange();
             throw new IllegalArgumentException();
         }
     }
 
     public static void validateWinningNumbersSize(int winningNumbersListSize) {
         if (winningNumbersListSize != 6) {
-            System.out.println("[ERROR] 당첨 번호는 6개만 작성되어야 합니다.");
+            outputWinningNumbersSize();
             throw new IllegalArgumentException();
         }
     }
@@ -131,7 +136,7 @@ public class Application {
 
     public static void validateBonusNumberFormat(String bonusNumber) {
         if (!bonusNumber.matches("[0-9]+")) {
-            System.out.println("[ERROR] 보너스 번호는 숫자로 입력해야 합니다.");
+            outputBonusNumberFormat();
             throw new IllegalArgumentException();
         }
     }
