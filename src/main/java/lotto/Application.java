@@ -64,9 +64,7 @@ public class Application {
     }
 
     public static List<Integer> getRandomNumberList() {
-        return Randoms.pickUniqueNumbersInRange(1, 45, 6).stream()
-                .sorted()
-                .collect(Collectors.toList());
+        return Randoms.pickUniqueNumbersInRange(1, 45, 6);
     }
 
     public static List<Integer> inputWinningNumbers() {

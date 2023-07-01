@@ -2,6 +2,7 @@ package lotto;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Lotto {
     private static final int MINIMUM_NUMBER_RANGE = 1;
@@ -10,7 +11,9 @@ public class Lotto {
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
-        this.numbers = numbers;
+        this.numbers = numbers.stream()
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     private void validate(List<Integer> numbers) {
