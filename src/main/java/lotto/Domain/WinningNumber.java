@@ -62,4 +62,14 @@ public class WinningNumber {
     public List<Integer> getNumbersList() {
         return numbersList;
     }
+
+    public void validateDuplicateBonusNumber(
+            List<Integer> numbersList,
+            int bonusNumber
+    ) {
+        if (numbersList.contains(bonusNumber)) {
+            outputNumberDuplicate();
+            throw new IllegalArgumentException();
+        }
+    }
 }

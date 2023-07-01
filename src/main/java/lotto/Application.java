@@ -124,23 +124,23 @@ public class Application {
 //        }
 //    }
 
-    public static int readBonusNumber(List<Integer> winningNumbersList) {
-        String bonusNumber = Input.inputBonusNumber();
-        validateBonusNumberFormat(bonusNumber);
-
-        int integerTypeBonusNumber = Integer.parseInt(bonusNumber);
-        //validateDuplicateNumber(winningNumbersList, integerTypeBonusNumber);
-        //validateNumberRange(integerTypeBonusNumber);
-        winningNumbersList.add(integerTypeBonusNumber);
-        return integerTypeBonusNumber;
-    }
-
-    public static void validateBonusNumberFormat(String bonusNumber) {
-        if (!bonusNumber.matches("[0-9]+")) {
-            outputBonusNumberFormat();
-            throw new IllegalArgumentException();
-        }
-    }
+//    public static int readBonusNumber(List<Integer> winningNumbersList) {
+//        String bonusNumber = Input.inputBonusNumber();
+//        validateBonusNumberFormat(bonusNumber);
+//
+//        int integerTypeBonusNumber = Integer.parseInt(bonusNumber);
+//        //validateDuplicateNumber(winningNumbersList, integerTypeBonusNumber);
+//        //validateNumberRange(integerTypeBonusNumber);
+//        winningNumbersList.add(integerTypeBonusNumber);
+//        return integerTypeBonusNumber;
+//    }
+//
+//    public static void validateBonusNumberFormat(String bonusNumber) {
+//        if (!bonusNumber.matches("[0-9]+")) {
+//            outputBonusNumberFormat();
+//            throw new IllegalArgumentException();
+//        }
+//    }
 
     public static void setGameOver(
             int purchaseLotteryCount,
