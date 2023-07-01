@@ -3,31 +3,36 @@ package lotto;
 import camp.nextstep.edu.missionutils.Randoms;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static camp.nextstep.edu.missionutils.Console.readLine;
 
 public class Application {
-    private static final int THREE_PRIZE_MONEY = 5000;
-    private static final int FOUR_PRIZE_MONEY = 50000;
-    private static final int FIVE_PRIZE_MONEY = 1_500_000;
-    private static final int FIVE_AND_BONUS_PRIZE_MONEY = 30_000_000;
-    private static final int SIX_PRIZE_MONEY = 2_000_000_000;
+    private static final int MINIMUM_NUMBER_RANGE = 1;
+    private static final int MAXIMUM_NUMBER_RANGE = 45;
+    private static final int THREE_WINNING_MONEY = 5000;
+    private static final int FOUR_WINNING_MONEY = 50000;
+    private static final int FIVE_WINNING_MONEY = 1_500_000;
+    private static final int FIVE_AND_BONUS_WINNING_MONEY = 30_000_000;
+    private static final int SIX_WINNING_MONEY = 2_000_000_000;
     public static void main(String[] args) {
         try {
+            System.out.println("구입금액을 입력해 주세요.");
             int purchasePrice = inputPurchasePrice();
+
             Lotto[] lotteries = getLotteryTickets(purchasePrice);
-            List<Integer> prizeNumbersList = inputPrizeNumbers();
-            int bonusNumber = inputBonusNumber(prizeNumbersList);
-            setGameOver(purchasePrice, lotteries, prizeNumbersList, bonusNumber);
+
+            System.out.println("당첨 번호를 입력해주세요.");
+            List<Integer> winningNumbersList = inputWinningNumbers();
+
+            int bonusNumber = inputBonusNumber(winningNumbersList);
+            setGameOver(purchasePrice, lotteries, winningNumbersList, bonusNumber);
         } catch (IllegalArgumentException ignored) {
         }
     }
 
     public static int inputPurchasePrice() {
-        System.out.println("구입금액을 입력해 주세요.");
         String purchasePrice = readLine();
         if (!isRightInputForPurchasePrice(purchasePrice)) {
             System.out.println("[ERROR] 구입금액은 숫자 형식으로 1,000에 나누어 떨어지는 숫자여야 합니다.");
@@ -37,7 +42,7 @@ public class Application {
     }
 
     public static boolean isRightInputForPurchasePrice(String purchasePrice) {
-        if (!purchasePrice.matches("[0-9]*")) return false;
+        if (!purchasePrice.matches("[0-9]+")) return false;
         return Integer.parseInt(purchasePrice) % 1000 == 0;
     }
 
@@ -59,30 +64,53 @@ public class Application {
                 .collect(Collectors.toList());
     }
 
-    public static List<Integer> inputPrizeNumbers() {
-        System.out.println("당첨 번호를 입력해주세요.");
-        String prizeNumbers = readLine().trim();
-        //if (!isRightInputForm(prizeNumbers)) throw new IllegalArgumentException();
-
-        List<Integer> prizeNumbersList = new ArrayList<>();
-        for (String numbers : prizeNumbers.split(",")) {
-            int number = Integer.parseInt(numbers);
-            //if (prizeNumbersList.contains(number)) throw new IllegalArgumentException();
-            prizeNumbersList.add(number);
+    public static List<Integer> inputWinningNumbers() {
+        String winningNumbers = readLine();
+        if (!winningNumbers.matches("[0-9,]+")) {
+            System.out.println("[ERROR] 당첨 번호는 띄어쓰기 없이 ,로 구분하여 작성해야 합니다.");
+            throw new IllegalArgumentException();
         }
-        return prizeNumbersList;
+        List<Integer> winningNumbersList = saveWinningNumbersList(winningNumbers);
+        if (winningNumbersList.size() != 6) {
+            System.out.println("[ERROR] 당첨 번호는 6개만 작성되어야 합니다.");
+            throw new IllegalArgumentException();
+        }
+        return winningNumbersList;
     }
 
-//    public static boolean isRightInputForm(String prizeNumbers) {
-//        if ()
-//
-//        return true;
-//    }
+    public static List<Integer> saveWinningNumbersList(String winningNumbers) {
+        List<Integer> winningNumbersList = new ArrayList<>();
+        for (String numbers : winningNumbers.split(",")) {
+            int number = Integer.parseInt(numbers);
+            validateWinningNumber(winningNumbersList, number);
+            winningNumbersList.add(number);
+        }
+        return winningNumbersList;
+    }
 
-    public static int inputBonusNumber(List<Integer> prizeNumbersList) {
+    public static void validateWinningNumber(
+            List<Integer> winningNumbersList,
+            int number
+    ) {
+        if (winningNumbersList.contains(number)) {
+            System.out.println("[ERROR] 당첨 번호는 중복 숫자가 없어야 합니다.");
+            throw new IllegalArgumentException();
+        }
+
+        if (number < MINIMUM_NUMBER_RANGE || number > MAXIMUM_NUMBER_RANGE) {
+            System.out.println("[ERROR] 당첨 번호의 범위는 1부터 45까지여야 합니다.");
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public static int inputBonusNumber(List<Integer> winningNumbersList) {
         System.out.println("보너스 번호를 입력해 주세요.");
         int bonusNumber = Integer.parseInt(readLine());
-        prizeNumbersList.add(bonusNumber);
+        if (bonusNumber < MINIMUM_NUMBER_RANGE || bonusNumber > MAXIMUM_NUMBER_RANGE) {
+            System.out.println("[ERROR] 보너스 번호의 범위는 1부터 45까지여야 합니다.");
+            throw new IllegalArgumentException();
+        }
+        winningNumbersList.add(bonusNumber);
 
         return bonusNumber;
     }
@@ -90,80 +118,78 @@ public class Application {
     public static void setGameOver(
             int purchasePrice,
             Lotto[] lotteries,
-            List<Integer> prizeNumbersList,
+            List<Integer> winningNumbersList,
             int bonusNumber
     ) {
-        int[] prizeScoreArray = getPrizeScore(lotteries, prizeNumbersList, bonusNumber);
-        double rateOfReturn = getRateOfReturn(purchasePrice, prizeScoreArray);
-        printResult(prizeScoreArray, rateOfReturn);
+        int[] winningScoreArray = getWinningScore(lotteries, winningNumbersList, bonusNumber);
+        double rateOfReturn = getRateOfReturn(purchasePrice, winningScoreArray);
+        printResult(winningScoreArray, rateOfReturn);
     }
 
-    public static int[] getPrizeScore(
+    public static int[] getWinningScore(
             Lotto[] lotteries,
-            List<Integer> prizeNumbersList,
+            List<Integer> winningNumbersList,
             int bonusNumber
     ) {
-        int[] prizeScoreArray = {0, 0, 0, 0, 0};
+        int[] winningScoreArray = {0, 0, 0, 0, 0};
 
         for (Lotto lottery : lotteries) {
             List<Integer> lotteryNumbers = lottery.getNumbers();
             boolean hasBonusNum = lotteryNumbers.contains(bonusNumber);
-            int prizeCount = getPrizeCount(lotteryNumbers, prizeNumbersList);
-
-            savePrizeScore(prizeCount, prizeScoreArray, hasBonusNum);
+            int winningCount = getWinningCount(lotteryNumbers, winningNumbersList);
+            saveWinningScore(winningCount, winningScoreArray, hasBonusNum);
         }
-        return prizeScoreArray;
+        return winningScoreArray;
     }
 
-    public static int getPrizeCount(
+    public static int getWinningCount(
             List<Integer> lotteryNumbers,
-            List<Integer> prizeNumbersList
+            List<Integer> winningNumbersList
     ) {
-        int prizeCount = 0;
+        int winningCount = 0;
         for (int num : lotteryNumbers) {
-            if (prizeNumbersList.contains(num)) prizeCount++;
+            if (winningNumbersList.contains(num)) winningCount++;
         }
-
-        return prizeCount;
+        return winningCount;
     }
 
-    public static void savePrizeScore(
-            int prizeCount,
-            int[] prizeScoreArray,
+    public static void saveWinningScore(
+            int winningCount,
+            int[] winningScoreArray,
             boolean hasBonusNum
     ) {
-        if (prizeCount == 3) prizeScoreArray[0]++;
-        else if (prizeCount == 4) prizeScoreArray[1]++;
-        else if (prizeCount == 5) prizeScoreArray[2]++;
-        else if (prizeCount == 6 && hasBonusNum) prizeScoreArray[3]++;
-        else if (prizeCount == 6) prizeScoreArray[4]++;
+        if (winningCount == 3) winningScoreArray[0]++;
+        else if (winningCount == 4) winningScoreArray[1]++;
+        else if (winningCount == 5) winningScoreArray[2]++;
+        else if (winningCount == 6 && hasBonusNum) winningScoreArray[3]++;
+        else if (winningCount == 6) winningScoreArray[4]++;
     }
 
     public static double getRateOfReturn(
             int purchasePrice,
-            int[] scoreArray
+            int[] winningScoreArray
     ) {
-        int totalPrizeMoney = 0;
-        totalPrizeMoney += scoreArray[0] * THREE_PRIZE_MONEY;
-        totalPrizeMoney += scoreArray[1] * FOUR_PRIZE_MONEY;
-        totalPrizeMoney += scoreArray[2] * FIVE_PRIZE_MONEY;
-        totalPrizeMoney += scoreArray[3] * FIVE_AND_BONUS_PRIZE_MONEY;
-        totalPrizeMoney += scoreArray[4] * SIX_PRIZE_MONEY;
-        System.out.println(totalPrizeMoney);
-        return (double) totalPrizeMoney / (double) purchasePrice * 100.0;
+        int totalWinningMoney = 0;
+        totalWinningMoney += winningScoreArray[0] * THREE_WINNING_MONEY;
+        totalWinningMoney += winningScoreArray[1] * FOUR_WINNING_MONEY;
+        totalWinningMoney += winningScoreArray[2] * FIVE_WINNING_MONEY;
+        totalWinningMoney += winningScoreArray[3] * FIVE_AND_BONUS_WINNING_MONEY;
+        totalWinningMoney += winningScoreArray[4] * SIX_WINNING_MONEY;
+        System.out.println(totalWinningMoney);
+        return (double) totalWinningMoney / (double) purchasePrice * 100.0;
     }
 
     public static void printResult(
-            int[] scoreArray,
+            int[] winningScoreArray,
             double rateOfReturn
     ) {
         System.out.println("당첨 통계");
         System.out.println("---");
-        System.out.println("3개 일치 (5,000원) - " + scoreArray[0] + "개");
-        System.out.println("4개 일치 (50,000원) - " + scoreArray[1] + "개");
-        System.out.println("5개 일치 (1,500,000원) - " + scoreArray[2] + "개");
-        System.out.println("5개 일치, 보너스 볼 일치 (30,000,000원) - " + scoreArray[3] + "개");
-        System.out.println("6개 일치 (2,000,000,000원) - " + scoreArray[4] + "개");
+        System.out.println("3개 일치 (5,000원) - " + winningScoreArray[0] + "개");
+        System.out.println("4개 일치 (50,000원) - " + winningScoreArray[1] + "개");
+        System.out.println("5개 일치 (1,500,000원) - " + winningScoreArray[2] + "개");
+        System.out.println("5개 일치, 보너스 볼 일치 (30,000,000원) - " + winningScoreArray[3] + "개");
+        System.out.println("6개 일치 (2,000,000,000원) - " + winningScoreArray[4] + "개");
         System.out.println("총 수익률은 " + String.format("%.1f", rateOfReturn) + "%입니다.");
     }
 }
