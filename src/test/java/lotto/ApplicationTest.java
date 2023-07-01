@@ -12,6 +12,7 @@ import java.util.List;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static lotto.Application.validatePurchasePrice;
+import static lotto.Application.validateWinningNumbersFormat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -34,6 +35,24 @@ class ApplicationTest extends NsTest {
     void occurredErrorWhenPurchasePriceTypedIncorrectly(String testPurchasePrice) {
         assertThrows(IllegalArgumentException.class,
                 () -> validatePurchasePrice(testPurchasePrice));
+    }
+
+    @DisplayName("당첨 번호를 형식에 맞지 않게 입력하면 [ERROR] 메시지가 출력된다.")
+    @ValueSource(strings = {"1, 2, 3, 4, 5, 6", "d,d,d,d,d,d"})
+    @ParameterizedTest
+    void outputErrorWhenWinningNumbersTypedIncorrectly(String testWinningNumbers) {
+        assertSimpleTest(() -> {
+            runException(testWinningNumbers);
+            assertThat(output()).contains(ERROR_MESSAGE);
+        });
+    }
+
+    @DisplayName("당첨 번호를 형식에 맞지 않게 입력하면 에러가 발생한다.")
+    @ValueSource(strings = {"1, 2, 3, 4, 5, 6", "d,d,d,d,d,d"})
+    @ParameterizedTest
+    void occurredErrorWhenWinningNumbersTypedIncorrectly(String testWinningNumbers) {
+        assertThrows(IllegalArgumentException.class,
+                () -> validateWinningNumbersFormat(testWinningNumbers));
     }
 
     @Test
