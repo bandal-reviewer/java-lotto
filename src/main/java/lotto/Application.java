@@ -71,10 +71,7 @@ public class Application {
         validateWinningNumbersFormat(winningNumbers);
 
         List<Integer> winningNumbersList = saveWinningNumbersList(winningNumbers);
-        if (winningNumbersList.size() != 6) {
-            System.out.println("[ERROR] 당첨 번호는 6개만 작성되어야 합니다.");
-            throw new IllegalArgumentException();
-        }
+        validateWinningNumbersSize(winningNumbersList.size());
         return winningNumbersList;
     }
 
@@ -111,6 +108,13 @@ public class Application {
     ) {
         if (winningNumbersList.contains(number)) {
             System.out.println("[ERROR] 당첨 번호는 중복 숫자가 없어야 합니다.");
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public static void validateWinningNumbersSize(int winningNumbersListSize) {
+        if (winningNumbersListSize != 6) {
+            System.out.println("[ERROR] 당첨 번호는 6개만 작성되어야 합니다.");
             throw new IllegalArgumentException();
         }
     }
