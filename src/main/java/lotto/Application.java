@@ -82,24 +82,26 @@ public class Application {
             List<Integer> prizeNumbersList,
             int bonusNumber
     ) {
-        // three, four, five, fiveBonus, six
-        int[] scoreArray = {0, 0, 0, 0, 0};
+        int[] prizeScoreArray = getPrizeScore(lotteries, prizeNumbersList, bonusNumber);
+        double rateOfReturn = getRateOfReturn(purchasePrice, prizeScoreArray);
+        printResult(prizeScoreArray, rateOfReturn);
+    }
+
+    public static int[] getPrizeScore(
+            Lotto[] lotteries,
+            List<Integer> prizeNumbersList,
+            int bonusNumber
+    ) {
+        int[] prizeScoreArray = {0, 0, 0, 0, 0};
 
         for (Lotto lottery : lotteries) {
-            boolean hasBonusNum = false;
             List<Integer> lotteryNumbers = lottery.getNumbers();
-
+            boolean hasBonusNum = lotteryNumbers.contains(bonusNumber);
             int prizeCount = getPrizeCount(lotteryNumbers, prizeNumbersList);
-            if (lotteryNumbers.contains(bonusNumber)) hasBonusNum = true;
 
-            if (prizeCount == 3) scoreArray[0]++;
-            else if (prizeCount == 4) scoreArray[1]++;
-            else if (prizeCount == 5) scoreArray[2]++;
-            else if (prizeCount == 6 && hasBonusNum) scoreArray[3]++;
-            else if (prizeCount == 6) scoreArray[4]++;
+            savePrizeScore(prizeCount, prizeScoreArray, hasBonusNum);
         }
-        double rateOfReturn = getRateOfReturn(purchasePrice, scoreArray);
-        printResult(scoreArray, rateOfReturn);
+        return prizeScoreArray;
     }
 
     public static int getPrizeCount(
@@ -112,6 +114,18 @@ public class Application {
         }
 
         return prizeCount;
+    }
+
+    public static void savePrizeScore(
+            int prizeCount,
+            int[] prizeScoreArray,
+            boolean hasBonusNum
+    ) {
+        if (prizeCount == 3) prizeScoreArray[0]++;
+        else if (prizeCount == 4) prizeScoreArray[1]++;
+        else if (prizeCount == 5) prizeScoreArray[2]++;
+        else if (prizeCount == 6 && hasBonusNum) prizeScoreArray[3]++;
+        else if (prizeCount == 6) prizeScoreArray[4]++;
     }
 
     public static double getRateOfReturn(
