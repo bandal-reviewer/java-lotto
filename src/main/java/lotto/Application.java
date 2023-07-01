@@ -40,23 +40,23 @@ public class Application {
         }*/
     }
 
-    public static int readPurchasePrice() {
-        String purchasePrice = Input.inputPurchasePrice();
-        validatePurchasePrice(purchasePrice);
-        return Integer.parseInt(purchasePrice);
-    }
-
-    public static void validatePurchasePrice(String purchasePrice) {
-        if (!purchasePrice.matches("[0-9]+")) {
-            outputPurchasePriceInteger();
-            throw new IllegalArgumentException();
-        }
-
-        if (Integer.parseInt(purchasePrice) % 1000 != 0) {
-            outputPurchasePriceDivide();
-            throw new IllegalArgumentException();
-        }
-    }
+//    public static int readPurchasePrice() {
+//        String purchasePrice = Input.inputPurchasePrice();
+//        validatePurchasePrice(purchasePrice);
+//        return Integer.parseInt(purchasePrice);
+//    }
+//
+//    public static void validatePurchasePrice(String purchasePrice) {
+//        if (!purchasePrice.matches("[0-9]+")) {
+//            outputPurchasePriceInteger();
+//            throw new IllegalArgumentException();
+//        }
+//
+//        if (Integer.parseInt(purchasePrice) % 1000 != 0) {
+//            outputPurchasePriceDivide();
+//            throw new IllegalArgumentException();
+//        }
+//    }
 
     public static Lotto[] getLotteryTickets(int purchaseLotteryCount) {
         Lotto[] lotteries = new Lotto[purchaseLotteryCount];

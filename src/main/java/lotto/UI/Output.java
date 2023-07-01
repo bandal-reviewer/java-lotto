@@ -1,5 +1,7 @@
 package lotto.UI;
 
+import java.util.List;
+
 public class Output {
     private static final String ERROR_PURCHASE_PRICE_INTEGER = "[ERROR] 구입금액은 숫자로 입력해야 합니다.";
     private static final String ERROR_PURCHASE_PRICE_DIVIDE = "[ERROR] 구입금액은 1,000에 나누어 떨어지는 숫자여야 합니다.";
@@ -8,6 +10,15 @@ public class Output {
     private static final String ERROR_NUMBER_DUPLICATE = "[ERROR] 번호는 중복 숫자가 없어야 합니다.";
     private static final String ERROR_NUMBER_RANGE =  "[ERROR] 번호의 범위는 1부터 45까지여야 합니다.";
     private static final String ERROR_BONUS_NUMBER_FORMAT = "[ERROR] 보너스 번호는 숫자로 입력해야 합니다.";
+    private static final String PURCHASE_LOTTERY = "개를 구매했습니다.";
+
+    public static void printPurchaseLotteryCount(int lotteryCount) {
+        System.out.println(lotteryCount + PURCHASE_LOTTERY);
+    }
+
+    public static void printLotteryNumbers(List<Integer> lotteryNumbers) {
+        System.out.println(lotteryNumbers);
+    }
 
     public static void outputPurchasePriceInteger() {
         System.out.println(ERROR_PURCHASE_PRICE_INTEGER);
