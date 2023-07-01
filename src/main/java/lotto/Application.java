@@ -38,16 +38,20 @@ public class Application {
 
     public static int inputPurchasePrice() {
         String purchasePrice = readLine();
-        if (!isRightInputForPurchasePrice(purchasePrice)) {
-            System.out.println("[ERROR] 구입금액은 숫자 형식으로 1,000에 나누어 떨어지는 숫자여야 합니다.");
-            throw new IllegalArgumentException();
-        }
+        validatePurchasePrice(purchasePrice);
         return Integer.parseInt(purchasePrice);
     }
 
-    public static boolean isRightInputForPurchasePrice(String purchasePrice) {
-        if (!purchasePrice.matches("[0-9]+")) return false;
-        return Integer.parseInt(purchasePrice) % 1000 == 0;
+    public static void validatePurchasePrice(String purchasePrice) {
+        if (!purchasePrice.matches("[0-9]+")) {
+            System.out.println("[ERROR] 구입금액은 숫자로 입력해야 합니다.");
+            throw new IllegalArgumentException();
+        }
+
+        if (Integer.parseInt(purchasePrice) % 1000 != 0) {
+            System.out.println("[ERROR] 구입금액은 1,000에 나누어 떨어지는 숫자여야 합니다.");
+            throw new IllegalArgumentException();
+        }
     }
 
     public static Lotto[] getLotteryTickets(int purchaseLotteryCount) {
@@ -117,7 +121,7 @@ public class Application {
     public static int inputBonusNumber(List<Integer> winningNumbersList) {
         String bonusNumber = readLine();
         if (!bonusNumber.matches("[0-9]+")) {
-            System.out.println("[ERROR] 보너스 번호는 정수로 입력해주셔야 합니다.");
+            System.out.println("[ERROR] 보너스 번호는 숫자로 입력해야 합니다.");
             throw new IllegalArgumentException();
         }
         int integerTypeBonusNumber = Integer.parseInt(bonusNumber);
