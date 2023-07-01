@@ -1,7 +1,6 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +12,6 @@ import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueN
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static lotto.Application.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ApplicationTest extends NsTest {
@@ -59,8 +57,6 @@ class ApplicationTest extends NsTest {
     @ValueSource(ints = {0, 46})
     @ParameterizedTest
     void createNumberByOverRange(int testNumber) {
-        assertThrows(IllegalArgumentException.class,
-                () -> validateNumberRange(testNumber));
         assertThrows(IllegalArgumentException.class,
                 () -> validateNumberRange(testNumber));
     }
