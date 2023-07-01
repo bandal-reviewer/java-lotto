@@ -79,6 +79,14 @@ class ApplicationTest extends NsTest {
                 () -> validateWinningNumbersSize(testSize));
     }
 
+    @DisplayName("보너스 번호를 형식에 맞지 않게 입력하면 예외가 발생한다.")
+    @ValueSource(strings = {"h", ""})
+    @ParameterizedTest
+    void validateBonusNumberFormatTest(String testBonusNumber) {
+        assertThrows(IllegalArgumentException.class,
+                () -> validateWinningNumbersFormat(testBonusNumber));
+    }
+
     @Test
     void 기능_테스트() {
         assertRandomUniqueNumbersInRangeTest(
