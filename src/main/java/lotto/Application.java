@@ -1,7 +1,11 @@
-package lotto.Domain;
+package lotto;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import lotto.Controller.Controller;
+import lotto.Domain.Lotto;
+import lotto.Domain.Winning;
 import lotto.UI.Input;
+import lotto.UI.Output;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +21,10 @@ import static lotto.UI.Output.outputWinningNumbersSize;
 public class Application {
     private static final int MINIMUM_NUMBER_RANGE = 1;
     private static final int MAXIMUM_NUMBER_RANGE = 45;
-    private static final int THREE_WINNING_MONEY_RATIO = 5;
-    private static final int FOUR_WINNING_MONEY_RATIO = 50;
-    private static final int FIVE_WINNING_MONEY_RATIO = 1_500;
-    private static final int FIVE_AND_BONUS_WINNING_MONEY_RATIO = 30_000;
-    private static final int SIX_WINNING_MONEY_RATIO = 2_000_000;
     public static void main(String[] args) {
-        try {
+        Controller controller = new Controller();
+        controller.run();
+        /*try {
             int purchasePrice = readPurchasePrice();
 
             int purchaseLotteryCount = purchasePrice / 1000;
@@ -36,7 +37,7 @@ public class Application {
 
             setGameOver(purchaseLotteryCount, lotteries, winningNumbersList, bonusNumber);
         } catch (IllegalArgumentException ignored) {
-        }
+        }*/
     }
 
     public static int readPurchasePrice() {
@@ -196,11 +197,11 @@ public class Application {
             int[] winningScoreArray
     ) {
         int totalWinningMoney = 0;
-        totalWinningMoney += winningScoreArray[0] * THREE_WINNING_MONEY_RATIO;
-        totalWinningMoney += winningScoreArray[1] * FOUR_WINNING_MONEY_RATIO;
-        totalWinningMoney += winningScoreArray[2] * FIVE_WINNING_MONEY_RATIO;
-        totalWinningMoney += winningScoreArray[3] * FIVE_AND_BONUS_WINNING_MONEY_RATIO;
-        totalWinningMoney += winningScoreArray[4] * SIX_WINNING_MONEY_RATIO;
+        totalWinningMoney += winningScoreArray[0] * Winning.THREE_WINNING.getMoneyRatio();
+        totalWinningMoney += winningScoreArray[1] * Winning.FOUR_WINNING.getMoneyRatio();
+        totalWinningMoney += winningScoreArray[2] * Winning.FIVE_WINNING.getMoneyRatio();
+        totalWinningMoney += winningScoreArray[3] * Winning.FIVE_AND_BONUS_WINNING.getMoneyRatio();
+        totalWinningMoney += winningScoreArray[4] * Winning.SIX_WINNING.getMoneyRatio();
         System.out.println(totalWinningMoney);
         return (double) totalWinningMoney / (double) purchaseLotteryCount * 100.0;
     }
