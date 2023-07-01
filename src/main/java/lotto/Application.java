@@ -121,15 +121,19 @@ public class Application {
 
     public static int inputBonusNumber(List<Integer> winningNumbersList) {
         String bonusNumber = readLine();
-        if (!bonusNumber.matches("[0-9]+")) {
-            System.out.println("[ERROR] 보너스 번호는 숫자로 입력해야 합니다.");
-            throw new IllegalArgumentException();
-        }
+        validateBonusNumberFormat(bonusNumber);
         int integerTypeBonusNumber = Integer.parseInt(bonusNumber);
         validateDuplicateNumber(winningNumbersList, integerTypeBonusNumber);
         validateNumberRange(integerTypeBonusNumber);
         winningNumbersList.add(integerTypeBonusNumber);
         return integerTypeBonusNumber;
+    }
+
+    public static void validateBonusNumberFormat(String bonusNumber) {
+        if (!bonusNumber.matches("[0-9]+")) {
+            System.out.println("[ERROR] 보너스 번호는 숫자로 입력해야 합니다.");
+            throw new IllegalArgumentException();
+        }
     }
 
     public static void setGameOver(
