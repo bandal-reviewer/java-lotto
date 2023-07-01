@@ -22,6 +22,16 @@ class ApplicationTest extends NsTest {
     @ValueSource(strings = {"1000h", "1001"})
     @ParameterizedTest
     void outputErrorWhenPurchasePriceTypedIncorrectly(String testPurchasePrice) {
+        assertSimpleTest(() -> {
+            runException(testPurchasePrice);
+            assertThat(output()).contains(ERROR_MESSAGE);
+        });
+    }
+
+    @DisplayName("구입금액을 형식에 맞지 않게 입력하면 에러가 발생한다.")
+    @ValueSource(strings = {"1000h", "1001"})
+    @ParameterizedTest
+    void occurredErrorWhenPurchasePriceTypedIncorrectly(String testPurchasePrice) {
         assertThrows(IllegalArgumentException.class,
                 () -> validatePurchasePrice(testPurchasePrice));
     }
