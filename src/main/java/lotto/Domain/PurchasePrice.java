@@ -4,7 +4,7 @@ import static lotto.UI.Output.outputPurchasePriceDivide;
 import static lotto.UI.Output.outputPurchasePriceInteger;
 
 public class PurchasePrice {
-    private String price;
+    private final String price;
 
     public PurchasePrice(String price) {
         validate(price);
