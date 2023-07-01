@@ -11,11 +11,11 @@ import static camp.nextstep.edu.missionutils.Console.readLine;
 public class Application {
     private static final int MINIMUM_NUMBER_RANGE = 1;
     private static final int MAXIMUM_NUMBER_RANGE = 45;
-    private static final int THREE_WINNING_MONEY = 5000;
-    private static final int FOUR_WINNING_MONEY = 50000;
-    private static final int FIVE_WINNING_MONEY = 1_500_000;
-    private static final int FIVE_AND_BONUS_WINNING_MONEY = 30_000_000;
-    private static final int SIX_WINNING_MONEY = 2_000_000_000;
+    private static final int THREE_WINNING_MONEY_RATIO = 5;
+    private static final int FOUR_WINNING_MONEY_RATIO = 50;
+    private static final int FIVE_WINNING_MONEY_RATIO = 1_500;
+    private static final int FIVE_AND_BONUS_WINNING_MONEY_RATIO = 30_000;
+    private static final int SIX_WINNING_MONEY_RATIO = 2_000_000;
     public static void main(String[] args) {
         try {
             System.out.println("구입금액을 입력해 주세요.");
@@ -31,7 +31,7 @@ public class Application {
             System.out.println("보너스 번호를 입력해 주세요.");
             int bonusNumber = inputBonusNumber(winningNumbersList);
 
-            setGameOver(purchasePrice, lotteries, winningNumbersList, bonusNumber);
+            setGameOver(purchaseLotteryCount, lotteries, winningNumbersList, bonusNumber);
         } catch (IllegalArgumentException ignored) {
         }
     }
@@ -75,6 +75,7 @@ public class Application {
             System.out.println("[ERROR] 당첨 번호는 띄어쓰기 없이 ,로 구분하여 작성해야 합니다.");
             throw new IllegalArgumentException();
         }
+
         List<Integer> winningNumbersList = saveWinningNumbersList(winningNumbers);
         if (winningNumbersList.size() != 6) {
             System.out.println("[ERROR] 당첨 번호는 6개만 작성되어야 합니다.");
@@ -87,18 +88,13 @@ public class Application {
         List<Integer> winningNumbersList = new ArrayList<>();
         for (String numbers : winningNumbers.split(",")) {
             int number = Integer.parseInt(numbers);
-            validateNumber(winningNumbersList, number);
+
+            validateDuplicateNumber(winningNumbersList, number);
+            validateNumberRange(number);
+
             winningNumbersList.add(number);
         }
         return winningNumbersList;
-    }
-
-    public static void validateNumber(
-            List<Integer> winningNumbersList,
-            int number
-    ) {
-        validateDuplicateNumber(winningNumbersList, number);
-        validateNumberRange(number);
     }
 
     public static void validateNumberRange(int number) {
@@ -125,19 +121,20 @@ public class Application {
             throw new IllegalArgumentException();
         }
         int integerTypeBonusNumber = Integer.parseInt(bonusNumber);
-        validateNumber(winningNumbersList, integerTypeBonusNumber);
+        validateDuplicateNumber(winningNumbersList, integerTypeBonusNumber);
+        validateNumberRange(integerTypeBonusNumber);
         winningNumbersList.add(integerTypeBonusNumber);
         return integerTypeBonusNumber;
     }
 
     public static void setGameOver(
-            int purchasePrice,
+            int purchaseLotteryCount,
             Lotto[] lotteries,
             List<Integer> winningNumbersList,
             int bonusNumber
     ) {
         int[] winningScoreArray = getWinningScore(lotteries, winningNumbersList, bonusNumber);
-        double rateOfReturn = getRateOfReturn(purchasePrice, winningScoreArray);
+        double rateOfReturn = getRateOfReturn(purchaseLotteryCount, winningScoreArray);
         printResult(winningScoreArray, rateOfReturn);
     }
 
@@ -181,17 +178,17 @@ public class Application {
     }
 
     public static double getRateOfReturn(
-            int purchasePrice,
+            int purchaseLotteryCount,
             int[] winningScoreArray
     ) {
         int totalWinningMoney = 0;
-        totalWinningMoney += winningScoreArray[0] * THREE_WINNING_MONEY;
-        totalWinningMoney += winningScoreArray[1] * FOUR_WINNING_MONEY;
-        totalWinningMoney += winningScoreArray[2] * FIVE_WINNING_MONEY;
-        totalWinningMoney += winningScoreArray[3] * FIVE_AND_BONUS_WINNING_MONEY;
-        totalWinningMoney += winningScoreArray[4] * SIX_WINNING_MONEY;
+        totalWinningMoney += winningScoreArray[0] * THREE_WINNING_MONEY_RATIO;
+        totalWinningMoney += winningScoreArray[1] * FOUR_WINNING_MONEY_RATIO;
+        totalWinningMoney += winningScoreArray[2] * FIVE_WINNING_MONEY_RATIO;
+        totalWinningMoney += winningScoreArray[3] * FIVE_AND_BONUS_WINNING_MONEY_RATIO;
+        totalWinningMoney += winningScoreArray[4] * SIX_WINNING_MONEY_RATIO;
         System.out.println(totalWinningMoney);
-        return (double) totalWinningMoney / (double) purchasePrice * 100.0;
+        return (double) totalWinningMoney / (double) purchaseLotteryCount * 100.0;
     }
 
     public static void printResult(
