@@ -14,6 +14,7 @@ public class Application {
         Lotto[] lotteries = getLotteryTickets(purchasePrice);
         List<Integer> prizeNumbersList = inputPrizeNumbers();
         int bonusNumber = inputBonusNumber(prizeNumbersList);
+        printResult(purchasePrice, lotteries, prizeNumbersList, bonusNumber);
     }
 
     public static int inputPurchasePrice() {
@@ -68,5 +69,33 @@ public class Application {
         prizeNumbersList.add(bonusNumber);
 
         return bonusNumber;
+    }
+
+    public static void printResult(
+            int purchasePrice,
+            Lotto[] lotteries,
+            List<Integer> prizeNumbersList,
+            int bonusNumber
+    ) {
+        // three, four, five, fiveBonus, six
+        int[] scoreArray = {0, 0, 0, 0, 0};
+        double rateOfReturn = 0.0;
+
+        for (Lotto lottery : lotteries) {
+            boolean hasBonusNum = false;
+            List<Integer> lotteryNumbers = lottery.getNumbers();
+            int count = 0;
+
+            if (lotteryNumbers.contains(bonusNumber)) hasBonusNum = true;
+            for (int num : lotteryNumbers) {
+                if (prizeNumbersList.contains(num)) count++;
+            }
+
+            if (count == 3) scoreArray[0]++;
+            else if (count == 4) scoreArray[1]++;
+            else if (count == 5) scoreArray[2]++;
+            else if (count == 6 && hasBonusNum) scoreArray[3]++;
+            else if (count == 6) scoreArray[4]++;
+        }
     }
 }
