@@ -58,79 +58,79 @@ public class Application {
 //        }
 //    }
 
-    public static Lotto[] getLotteryTickets(int purchaseLotteryCount) {
-        Lotto[] lotteries = new Lotto[purchaseLotteryCount];
-        for (int i = 0; i < purchaseLotteryCount; i++) {
-            lotteries[i] = new Lotto(getRandomNumberList());
-            System.out.println(lotteries[i].getNumbers());
-        }
-        return lotteries;
-    }
+//    public static Lotto[] getLotteryTickets(int purchaseLotteryCount) {
+//        Lotto[] lotteries = new Lotto[purchaseLotteryCount];
+//        for (int i = 0; i < purchaseLotteryCount; i++) {
+//            lotteries[i] = new Lotto(getRandomNumberList());
+//            System.out.println(lotteries[i].getNumbers());
+//        }
+//        return lotteries;
+//    }
+//
+//    public static List<Integer> getRandomNumberList() {
+//        return Randoms.pickUniqueNumbersInRange(1, 45, 6);
+//    }
 
-    public static List<Integer> getRandomNumberList() {
-        return Randoms.pickUniqueNumbersInRange(1, 45, 6);
-    }
-
-    public static List<Integer> readWinningNumbers() {
-        String winningNumbers = Input.inputWinningNumbers();
-        validateWinningNumbersFormat(winningNumbers);
-
-        List<Integer> winningNumbersList = saveWinningNumbersList(winningNumbers);
-        validateWinningNumbersSize(winningNumbersList.size());
-        return winningNumbersList;
-    }
-
-    public static void validateWinningNumbersFormat(String winningNumbers) {
-        if (!winningNumbers.matches("[0-9,]+")) {
-            outputWinningNumbersFormat();
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public static List<Integer> saveWinningNumbersList(String winningNumbers) {
-        List<Integer> winningNumbersList = new ArrayList<>();
-        for (String numbers : winningNumbers.split(",")) {
-            int number = Integer.parseInt(numbers);
-
-            validateDuplicateNumber(winningNumbersList, number);
-            validateNumberRange(number);
-
-            winningNumbersList.add(number);
-        }
-        return winningNumbersList;
-    }
-
-    public static void validateDuplicateNumber(
-            List<Integer> winningNumbersList,
-            int number
-    ) {
-        if (winningNumbersList.contains(number)) {
-            outputNumberDuplicate();
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public static void validateNumberRange(int number) {
-        if (number < MINIMUM_NUMBER_RANGE || number > MAXIMUM_NUMBER_RANGE) {
-            outputNumberRange();
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public static void validateWinningNumbersSize(int winningNumbersListSize) {
-        if (winningNumbersListSize != 6) {
-            outputWinningNumbersSize();
-            throw new IllegalArgumentException();
-        }
-    }
+//    public static List<Integer> readWinningNumbers() {
+//        String winningNumbers = Input.inputWinningNumbers();
+//        validateWinningNumbersFormat(winningNumbers);
+//
+//        List<Integer> winningNumbersList = saveWinningNumbersList(winningNumbers);
+//        validateWinningNumbersSize(winningNumbersList.size());
+//        return winningNumbersList;
+//    }
+//
+//    public static void validateWinningNumbersFormat(String winningNumbers) {
+//        if (!winningNumbers.matches("[0-9,]+")) {
+//            outputWinningNumbersFormat();
+//            throw new IllegalArgumentException();
+//        }
+//    }
+//
+//    public static List<Integer> saveWinningNumbersList(String winningNumbers) {
+//        List<Integer> winningNumbersList = new ArrayList<>();
+//        for (String numbers : winningNumbers.split(",")) {
+//            int number = Integer.parseInt(numbers);
+//
+//            validateDuplicateNumber(winningNumbersList, number);
+//            validateNumberRange(number);
+//
+//            winningNumbersList.add(number);
+//        }
+//        return winningNumbersList;
+//    }
+//
+//    public static void validateDuplicateNumber(
+//            List<Integer> winningNumbersList,
+//            int number
+//    ) {
+//        if (winningNumbersList.contains(number)) {
+//            outputNumberDuplicate();
+//            throw new IllegalArgumentException();
+//        }
+//    }
+//
+//    public static void validateNumberRange(int number) {
+//        if (number < MINIMUM_NUMBER_RANGE || number > MAXIMUM_NUMBER_RANGE) {
+//            outputNumberRange();
+//            throw new IllegalArgumentException();
+//        }
+//    }
+//
+//    public static void validateWinningNumbersSize(int winningNumbersListSize) {
+//        if (winningNumbersListSize != 6) {
+//            outputWinningNumbersSize();
+//            throw new IllegalArgumentException();
+//        }
+//    }
 
     public static int readBonusNumber(List<Integer> winningNumbersList) {
         String bonusNumber = Input.inputBonusNumber();
         validateBonusNumberFormat(bonusNumber);
 
         int integerTypeBonusNumber = Integer.parseInt(bonusNumber);
-        validateDuplicateNumber(winningNumbersList, integerTypeBonusNumber);
-        validateNumberRange(integerTypeBonusNumber);
+        //validateDuplicateNumber(winningNumbersList, integerTypeBonusNumber);
+        //validateNumberRange(integerTypeBonusNumber);
         winningNumbersList.add(integerTypeBonusNumber);
         return integerTypeBonusNumber;
     }
