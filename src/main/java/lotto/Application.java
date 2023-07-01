@@ -88,21 +88,30 @@ public class Application {
         for (Lotto lottery : lotteries) {
             boolean hasBonusNum = false;
             List<Integer> lotteryNumbers = lottery.getNumbers();
-            int count = 0;
 
+            int prizeCount = getPrizeCount(lotteryNumbers, prizeNumbersList);
             if (lotteryNumbers.contains(bonusNumber)) hasBonusNum = true;
-            for (int num : lotteryNumbers) {
-                if (prizeNumbersList.contains(num)) count++;
-            }
 
-            if (count == 3) scoreArray[0]++;
-            else if (count == 4) scoreArray[1]++;
-            else if (count == 5) scoreArray[2]++;
-            else if (count == 6 && hasBonusNum) scoreArray[3]++;
-            else if (count == 6) scoreArray[4]++;
+            if (prizeCount == 3) scoreArray[0]++;
+            else if (prizeCount == 4) scoreArray[1]++;
+            else if (prizeCount == 5) scoreArray[2]++;
+            else if (prizeCount == 6 && hasBonusNum) scoreArray[3]++;
+            else if (prizeCount == 6) scoreArray[4]++;
         }
         double rateOfReturn = getRateOfReturn(purchasePrice, scoreArray);
         printResult(scoreArray, rateOfReturn);
+    }
+
+    public static int getPrizeCount(
+            List<Integer> lotteryNumbers,
+            List<Integer> prizeNumbersList
+    ) {
+        int prizeCount = 0;
+        for (int num : lotteryNumbers) {
+            if (prizeNumbersList.contains(num)) prizeCount++;
+        }
+
+        return prizeCount;
     }
 
     public static double getRateOfReturn(
