@@ -18,6 +18,6 @@ public class Controller {
 
     public static int readPurchasePrice() {
         PurchasePrice purchasePrice = new PurchasePrice(Input.inputPurchasePrice());
-        return purchasePrice.getPurchasePrice();
+        return purchasePrice.getPrice();
     }
 }

@@ -4,26 +4,26 @@ import static lotto.UI.Output.outputPurchasePriceDivide;
 import static lotto.UI.Output.outputPurchasePriceInteger;
 
 public class PurchasePrice {
-    private String purchasePrice;
+    private String price;
 
-    public PurchasePrice(String purchasePrice) {
-        validate(purchasePrice);
-        this.purchasePrice = purchasePrice;
+    public PurchasePrice(String price) {
+        validate(price);
+        this.price = price;
     }
 
-    private void validate(String purchasePrice) {
-        if (!purchasePrice.matches("[0-9]+")) {
+    private void validate(String price) {
+        if (!price.matches("[0-9]+")) {
             outputPurchasePriceInteger();
             throw new IllegalArgumentException();
         }
 
-        if (Integer.parseInt(purchasePrice) % 1000 != 0) {
+        if (Integer.parseInt(price) % 1000 != 0) {
             outputPurchasePriceDivide();
             throw new IllegalArgumentException();
         }
     }
 
-    public int getPurchasePrice() {
-        return Integer.parseInt(purchasePrice);
+    public int getPrice() {
+        return Integer.parseInt(price);
     }
 }
