@@ -2,6 +2,7 @@ package lotto;
 
 import camp.nextstep.edu.missionutils.Randoms;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class Application {
     public static void main(String[] args) {
         int purchasePrice = inputPurchasePrice();
         Lotto[] lotteries = getLotteryTickets(purchasePrice);
+        List<Integer> prizeNumbersList = inputPrizeNumbers();
     }
 
     public static int inputPurchasePrice() {
@@ -39,5 +41,23 @@ public class Application {
         return list;
     }
 
+    public static List<Integer> inputPrizeNumbers() {
+        System.out.println("당첨 번호를 입력해주세요.");
+        String prizeNumbers = readLine().trim();
+        //if (!isRightInputForm(prizeNumbers)) throw new IllegalArgumentException();
 
+        List<Integer> prizeNumbersList = new ArrayList<>();
+        for (String numbers : prizeNumbers.split(",")) {
+            int number = Integer.parseInt(numbers);
+            //if (prizeNumbersList.contains(number)) throw new IllegalArgumentException();
+            prizeNumbersList.add(number);
+        }
+        return prizeNumbersList;
+    }
+
+//    public static boolean isRightInputForm(String prizeNumbers) {
+//        if ()
+//
+//        return true;
+//    }
 }
