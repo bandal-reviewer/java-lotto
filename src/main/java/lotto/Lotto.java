@@ -1,10 +1,11 @@
 package lotto;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
 public class Lotto {
+    private static final int MINIMUM_NUMBER_RANGE = 1;
+    private static final int MAXIMUM_NUMBER_RANGE = 45;
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
@@ -13,9 +14,23 @@ public class Lotto {
     }
 
     private void validate(List<Integer> numbers) {
-        if (numbers.size() != 6) throw new IllegalArgumentException();
+        if (numbers.size() != 6) {
+            System.out.println("[ERROR] 로또는 6개만 작성되어야 합니다.");
+            throw new IllegalArgumentException();
+        }
+
         HashSet<Integer> validateNumbersSet = new HashSet<>(numbers);
-        if (validateNumbersSet.size() != numbers.size()) throw new IllegalArgumentException();
+        if (validateNumbersSet.size() != numbers.size()) {
+            System.out.println("[ERROR] 로또는 중복 숫자가 없어야 합니다.");
+            throw new IllegalArgumentException();
+        }
+
+        for (int number : numbers) {
+            if (number < MINIMUM_NUMBER_RANGE || number > MAXIMUM_NUMBER_RANGE) {
+                System.out.println("[ERROR] 로또의 범위는 1부터 45까지여야 합니다.");
+                throw new IllegalArgumentException();
+            }
+        }
     }
 
     public List<Integer> getNumbers() {
