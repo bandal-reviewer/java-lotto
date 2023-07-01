@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
@@ -59,6 +61,14 @@ class ApplicationTest extends NsTest {
     void createNumberByOverRange(int testNumber) {
         assertThrows(IllegalArgumentException.class,
                 () -> validateNumberRange(testNumber));
+    }
+
+    @DisplayName("숫자가 이미 리스트에 포함되어 있다면 예외가 발생한다.")
+    @Test
+    void validateDuplicateNumberTest() {
+        List<Integer> testWinningNumbersList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
+        assertThrows(IllegalArgumentException.class,
+                () -> validateDuplicateNumber(testWinningNumbersList, 6));
     }
 
     @Test
