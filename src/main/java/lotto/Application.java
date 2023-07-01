@@ -9,12 +9,17 @@ import java.util.List;
 import static camp.nextstep.edu.missionutils.Console.readLine;
 
 public class Application {
+    private static final int THREE_PRIZE_MONEY = 5000;
+    private static final int FOUR_PRIZE_MONEY = 50000;
+    private static final int FIVE_PRIZE_MONEY = 1_500_000;
+    private static final int FIVE_AND_BONUS_PRIZE_MONEY = 30_000_000;
+    private static final int SIX_PRIZE_MONEY = 2_000_000_000;
     public static void main(String[] args) {
         int purchasePrice = inputPurchasePrice();
         Lotto[] lotteries = getLotteryTickets(purchasePrice);
         List<Integer> prizeNumbersList = inputPrizeNumbers();
         int bonusNumber = inputBonusNumber(prizeNumbersList);
-        printResult(purchasePrice, lotteries, prizeNumbersList, bonusNumber);
+        setGameOver(purchasePrice, lotteries, prizeNumbersList, bonusNumber);
     }
 
     public static int inputPurchasePrice() {
@@ -71,7 +76,7 @@ public class Application {
         return bonusNumber;
     }
 
-    public static void printResult(
+    public static void setGameOver(
             int purchasePrice,
             Lotto[] lotteries,
             List<Integer> prizeNumbersList,
@@ -79,7 +84,6 @@ public class Application {
     ) {
         // three, four, five, fiveBonus, six
         int[] scoreArray = {0, 0, 0, 0, 0};
-        double rateOfReturn = 0.0;
 
         for (Lotto lottery : lotteries) {
             boolean hasBonusNum = false;
@@ -97,5 +101,35 @@ public class Application {
             else if (count == 6 && hasBonusNum) scoreArray[3]++;
             else if (count == 6) scoreArray[4]++;
         }
+        double rateOfReturn = getRateOfReturn(purchasePrice, scoreArray);
+        printResult(scoreArray, rateOfReturn);
+    }
+
+    public static double getRateOfReturn(
+            int purchasePrice,
+            int[] scoreArray
+    ) {
+        int totalPrizeMoney = 0;
+        totalPrizeMoney += scoreArray[0] * THREE_PRIZE_MONEY;
+        totalPrizeMoney += scoreArray[1] * FOUR_PRIZE_MONEY;
+        totalPrizeMoney += scoreArray[2] * FIVE_PRIZE_MONEY;
+        totalPrizeMoney += scoreArray[3] * FIVE_AND_BONUS_PRIZE_MONEY;
+        totalPrizeMoney += scoreArray[4] * SIX_PRIZE_MONEY;
+        System.out.println(totalPrizeMoney);
+        return (double) totalPrizeMoney / (double) purchasePrice * 100.0;
+    }
+
+    public static void printResult(
+            int[] scoreArray,
+            double rateOfReturn
+    ) {
+        System.out.println("당첨 통계");
+        System.out.println("---");
+        System.out.println("3개 일치 (5,000원) - " + scoreArray[0] + "개");
+        System.out.println("4개 일치 (50,000원) - " + scoreArray[1] + "개");
+        System.out.println("5개 일치 (1,500,000원) - " + scoreArray[2] + "개");
+        System.out.println("5개 일치, 보너스 볼 일치 (30,000,000원) - " + scoreArray[3] + "개");
+        System.out.println("6개 일치 (2,000,000,000원) - " + scoreArray[4] + "개");
+        System.out.println("총 수익률은 " + String.format("%.1f", rateOfReturn) + "%입니다.");
     }
 }
