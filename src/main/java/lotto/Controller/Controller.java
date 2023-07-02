@@ -11,7 +11,6 @@ import lotto.UI.Input;
 import lotto.UI.Output;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +23,16 @@ public class Controller {
     }
 
     public void startLotto() {
-        int purchasePrice = readPurchasePrice();
-
-        int purchaseLotteryCount = purchasePrice / 1000;
+        int purchaseLotteryCount = generatePurchaseLotteryCount();
         Output.printPurchaseLotteryCount(purchaseLotteryCount);
         Lotto[] lotteries = getLotteryTickets(purchaseLotteryCount);
 
         WinningNumberSet winningNumberSet = readWinningNumbers();
         setGameOver(purchaseLotteryCount, lotteries, winningNumberSet);
+    }
+
+    public static int generatePurchaseLotteryCount() {
+        return readPurchasePrice() / 1000;
     }
 
     public static int readPurchasePrice() {
