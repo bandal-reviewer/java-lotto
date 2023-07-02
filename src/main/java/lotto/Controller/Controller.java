@@ -80,12 +80,12 @@ public class Controller {
             Lotto[] lotteries,
             WinningNumberSet winningNumberSet
     ) {
-        Map<Winning, Integer> winningScoreMap = getWinningScore(lotteries, winningNumberSet);
+        Map<Winning, Integer> winningScoreMap = getWinningScoreMap(lotteries, winningNumberSet);
         double rateOfReturn = getRateOfReturn(purchaseLotteryCount, winningScoreMap);
         Winning.printResult(winningScoreMap, rateOfReturn);
     }
 
-    public static Map<Winning, Integer> getWinningScore(
+    public static Map<Winning, Integer> getWinningScoreMap(
             Lotto[] lotteries,
             WinningNumberSet winningNumberSet
     ) {
@@ -93,15 +93,24 @@ public class Controller {
         for (Winning winning : Winning.values()) {
             winningScoreMap.put(winning, 0);
         }
+        saveWinningScore(lotteries, winningNumberSet, winningScoreMap);
+        return winningScoreMap;
+    }
 
+    public static void saveWinningScore(
+            Lotto[] lotteries,
+            WinningNumberSet winningNumberSet,
+            Map<Winning, Integer> winningScoreMap
+    ) {
         for (Lotto lottery : lotteries) {
             List<Integer> lotteryNumbers = lottery.getNumbers();
+
             boolean hasBonusNum = lotteryNumbers.contains(winningNumberSet.getBonusNumber());
             int winningCount = getWinningCount(lotteryNumbers, winningNumberSet.getNumbersList());
+
             Winning winning = Winning.getRightWinningScore(winningCount, hasBonusNum);
             winningScoreMap.put(winning, winningScoreMap.get(winning) + 1);
         }
-        return winningScoreMap;
     }
 
     public static int getWinningCount(
@@ -109,8 +118,8 @@ public class Controller {
             List<Integer> winningNumbersList
     ) {
         int winningCount = 0;
-        for (int num : lotteryNumbers) {
-            if (winningNumbersList.contains(num)) winningCount++;
+        for (int lotteryNum : lotteryNumbers) {
+            if (winningNumbersList.contains(lotteryNum)) winningCount++;
         }
         return winningCount;
     }
