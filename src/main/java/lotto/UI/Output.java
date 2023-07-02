@@ -1,5 +1,8 @@
 package lotto.UI;
 
+import lotto.Domain.Winning;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class Output {
@@ -11,9 +14,22 @@ public class Output {
     private static final String ERROR_NUMBER_RANGE =  "[ERROR] 번호의 범위는 1부터 45까지여야 합니다.";
     private static final String ERROR_BONUS_NUMBER_FORMAT = "[ERROR] 보너스 번호는 숫자로 입력해야 합니다.";
     private static final String PURCHASE_LOTTERY = "개를 구매했습니다.";
+    private static final String RESULT_VIEW = "당첨 통계\n---";
 
     public static void printPurchaseLotteryCount(int lotteryCount) {
         System.out.println(lotteryCount + PURCHASE_LOTTERY);
+    }
+
+    public static void printResultView() {
+        System.out.println(RESULT_VIEW);
+    }
+
+    public static void printWinningScore(String outputString, int winningScore) {
+        System.out.println(outputString + winningScore + "개");
+    }
+
+    public static void printRateOfReturn(double rateOfReturn) {
+        System.out.println("총 수익률은 " + String.format("%.1f", rateOfReturn) + "%입니다.");
     }
 
     public static void printLotteryNumbers(List<Integer> lotteryNumbers) {

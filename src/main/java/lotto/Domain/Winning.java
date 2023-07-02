@@ -1,6 +1,12 @@
 package lotto.Domain;
 
+import lotto.UI.Input;
+import lotto.UI.Output;
+
+import java.util.Map;
+
 public enum Winning {
+    NO_WINNING(-1, 0, ""),
     THREE_WINNING(3, 5, "3개 일치 (5,000원) - "),
     FOUR_WINNING(4, 50, "4개 일치 (50,000원) - "),
     FIVE_WINNING(5, 1_500, "5개 일치 (1,500,000원) - "),
@@ -26,5 +32,26 @@ public enum Winning {
 
     public String getOutputString() {
         return outputString;
+    }
+
+    public static Winning getRightWinningScore(int winningCount, boolean hasBonusNum) {
+        if (winningCount == FIVE_AND_BONUS_WINNING.correctCount
+                && hasBonusNum) return FIVE_AND_BONUS_WINNING;
+
+        for (Winning winning : values()) {
+            if (winningCount == winning.getCorrectCount()
+                    && winning != FIVE_AND_BONUS_WINNING) return winning;
+        }
+
+        return NO_WINNING;
+    }
+
+    public static void printResult(Map<Winning, Integer> winningScoreMap, double rateOfReturn) {
+        Output.printResultView();
+        for (Winning winning : values()) {
+            if (winning == NO_WINNING) continue;
+            Output.printWinningScore(winning.getOutputString(), winningScoreMap.get(winning));
+        }
+        Output.printRateOfReturn(rateOfReturn);
     }
 }
