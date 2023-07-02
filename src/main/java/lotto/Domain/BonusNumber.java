@@ -1,32 +1,30 @@
 package lotto.Domain;
 
-import static lotto.UI.Output.outputBonusNumberFormat;
-import static lotto.UI.Output.outputNumberRange;
+import lotto.UI.Output;
 
 public class BonusNumber {
     private static final int MINIMUM_NUMBER_RANGE = 1;
     private static final int MAXIMUM_NUMBER_RANGE = 45;
-    private final String bonusNumber;
+    private final int bonusNumber;
     public BonusNumber(String bonusNumber) {
         validate(bonusNumber);
-        this.bonusNumber = bonusNumber;
+        this.bonusNumber = Integer.parseInt(bonusNumber);
     }
 
     private void validate(String bonusNumber) {
         if (!bonusNumber.matches("[0-9]+")) {
-            outputBonusNumberFormat();
+            Output.outputBonusNumberFormat();
             throw new IllegalArgumentException();
         }
-    }
 
-    public void validateRangeOver(int bonusNumber) {
-        if (bonusNumber < MINIMUM_NUMBER_RANGE || bonusNumber > MAXIMUM_NUMBER_RANGE) {
-            outputNumberRange();
+        if (Integer.parseInt(bonusNumber) < MINIMUM_NUMBER_RANGE
+                || Integer.parseInt(bonusNumber) > MAXIMUM_NUMBER_RANGE) {
+            Output.outputNumberRange();
             throw new IllegalArgumentException();
         }
     }
 
     public int getBonusNumber() {
-        return Integer.parseInt(bonusNumber);
+        return bonusNumber;
     }
 }

@@ -1,14 +1,25 @@
 package lotto.Domain;
 
+import lotto.UI.Output;
+
 import java.util.List;
 
 public class WinningNumberSet {
-    private int bonusNumber;
-    private List<Integer> numbersList;
+    private final int bonusNumber;
+    private final Lotto numbersList;
 
-    public WinningNumberSet(int bonusNumber, List<Integer> numbersList) {
+    public WinningNumberSet(int bonusNumber, Lotto numbersList) {
+        validate(bonusNumber, numbersList);
+        numbersList.getNumbers().add(bonusNumber);
         this.bonusNumber = bonusNumber;
         this.numbersList = numbersList;
+    }
+
+    private void validate(int bonusNumber, Lotto numbersList) {
+        if (numbersList.getNumbers().contains(bonusNumber)) {
+            Output.outputNumberDuplicate();
+            throw new IllegalArgumentException();
+        }
     }
 
     public int getBonusNumber() {
@@ -16,6 +27,6 @@ public class WinningNumberSet {
     }
 
     public List<Integer> getNumbersList() {
-        return numbersList;
+        return numbersList.getNumbers();
     }
 }

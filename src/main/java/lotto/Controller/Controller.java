@@ -10,6 +10,7 @@ import lotto.Domain.WinningNumberSet;
 import lotto.UI.Input;
 import lotto.UI.Output;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -56,15 +57,22 @@ public class Controller {
 
     public static WinningNumberSet readWinningNumbers() {
         WinningNumber winningNumber = new WinningNumber(Input.inputWinningNumbers());
-        List<Integer> winningNumbersList = winningNumber.getNumbersList();
+        Lotto winningNumbersList
+                = new Lotto(convertWinningNumberStringToList(winningNumber.getNumbers()));
 
         BonusNumber bonusNumber = new BonusNumber(Input.inputBonusNumber());
         int integerTypeBonusNumber = bonusNumber.getBonusNumber();
 
-        bonusNumber.validateRangeOver(integerTypeBonusNumber);
-        winningNumber.validateDuplicateBonusNumber(winningNumbersList, integerTypeBonusNumber);
-        winningNumbersList.add(integerTypeBonusNumber);
         return new WinningNumberSet(integerTypeBonusNumber, winningNumbersList);
+    }
+
+    public static List<Integer> convertWinningNumberStringToList(String numbers) {
+        List<Integer> numbersList = new ArrayList<>();
+        for (String number : numbers.split(",")) {
+            int num = Integer.parseInt(number);
+            numbersList.add(num);
+        }
+        return numbersList;
     }
 
     public static void setGameOver(

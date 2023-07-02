@@ -1,8 +1,5 @@
 package lotto.UI;
 
-import lotto.Domain.Winning;
-
-import java.util.HashMap;
 import java.util.List;
 
 public class Output {
