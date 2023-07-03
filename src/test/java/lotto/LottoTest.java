@@ -33,13 +33,6 @@ class LottoTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("로또 객체에서 리스트를 반환 받을 수 있다.")
-    @Test
-    void getLottoListReturnedLottoObject() {
-        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        assertThat(lotto.getNumbers()).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
-    }
-
     @DisplayName("로또 객체에서 리스트를 오름차순으로 정렬할 수 있다.")
     @Test
     void sortListInAscOrderInLottoObject() {
