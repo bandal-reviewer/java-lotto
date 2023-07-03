@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.test.NsTest;
 import lotto.Domain.BonusNumber;
 import lotto.Domain.Lotto;
 import lotto.Domain.PurchasePrice;
+import lotto.Domain.Winning;
 import lotto.Domain.WinningNumber;
 import lotto.Domain.WinningNumberSet;
 import org.junit.jupiter.api.DisplayName;
@@ -100,7 +101,7 @@ class ApplicationTest extends NsTest {
     }
 
 
-    @DisplayName("당첨 숫자와 로또를 비교하여 일치하는 숫자를 제대로 찾는지 확인")
+    @DisplayName("당첨 번호와 로또를 비교하여 일치하는 숫자를 제대로 찾는지 확인")
     @Test
     void getWinningCountTest() {
         assertAll(
@@ -113,6 +114,27 @@ class ApplicationTest extends NsTest {
                 () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 4, 5, 6, 7)), 6)
         );
     }
+
+    @DisplayName("당첨 번호와 보너스 번호 포함 유무가 주어질 때 알맞은 메뉴와 일치하는지 확인")
+    @Test
+    void getRightWinningScoreTest() {
+        assertAll(
+                () -> assertEquals(Winning.getRightWinningScore(0, false), Winning.NO_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(1, true), Winning.NO_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(1, false), Winning.NO_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(2, true), Winning.NO_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(2, false), Winning.NO_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(3, true), Winning.THREE_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(3, false), Winning.THREE_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(4, true), Winning.FOUR_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(4, false), Winning.FOUR_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(5, true), Winning.FIVE_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(5, false), Winning.FIVE_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(6, true), Winning.FIVE_AND_BONUS_WINNING),
+                () -> assertEquals(Winning.getRightWinningScore(6, false), Winning.SIX_WINNING)
+        );
+    }
+
 
     @Test
     void 기능_테스트() {
