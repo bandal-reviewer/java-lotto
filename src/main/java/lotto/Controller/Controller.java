@@ -81,7 +81,7 @@ public class Controller {
             WinningNumberSet winningNumberSet
     ) {
         Map<Winning, Integer> winningScoreMap = getWinningScoreMap(lotteries, winningNumberSet);
-        double rateOfReturn = getRateOfReturn(purchaseLotteryCount, winningScoreMap);
+        String rateOfReturn = getRateOfReturn(purchaseLotteryCount, winningScoreMap);
         Winning.printResult(winningScoreMap, rateOfReturn);
     }
 
@@ -124,7 +124,7 @@ public class Controller {
         return winningCount;
     }
 
-    public static double getRateOfReturn(
+    public static String getRateOfReturn(
             int purchaseLotteryCount,
             Map<Winning, Integer> winningScoreMap
     ) {
@@ -132,6 +132,6 @@ public class Controller {
         for (Winning key : winningScoreMap.keySet()) {
             totalWinningMoney += winningScoreMap.get(key) * key.getMoneyRatio();
         }
-        return (double) totalWinningMoney / (double) purchaseLotteryCount * 100.0;
+        return String.format("%.1f", (double) totalWinningMoney / (double) purchaseLotteryCount * 100.0);
     }
 }

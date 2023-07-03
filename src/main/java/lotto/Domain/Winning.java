@@ -46,7 +46,7 @@ public enum Winning {
         return NO_WINNING;
     }
 
-    public static void printResult(Map<Winning, Integer> winningScoreMap, double rateOfReturn) {
+    public static void printResult(Map<Winning, Integer> winningScoreMap, String rateOfReturn) {
         Output.printResultView();
         for (Winning winning : values()) {
             if (winning == NO_WINNING) continue;

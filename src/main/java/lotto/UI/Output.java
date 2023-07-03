@@ -25,8 +25,8 @@ public class Output {
         System.out.println(outputString + winningScore + "개");
     }
 
-    public static void printRateOfReturn(double rateOfReturn) {
-        System.out.println("총 수익률은 " + String.format("%.1f", rateOfReturn) + "%입니다.");
+    public static void printRateOfReturn(String rateOfReturn) {
+        System.out.println("총 수익률은 " + rateOfReturn + "%입니다.");
     }
 
     public static void printLotteryNumbers(List<Integer> lotteryNumbers) {
