@@ -15,6 +15,7 @@ import java.util.List;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
+import static lotto.Controller.Controller.convertWinningNumberStringToList;
 import static lotto.Controller.Controller.getWinningCount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -90,6 +91,12 @@ class ApplicationTest extends NsTest {
     void generateWinningNumberSetTest() {
         assertThrows(IllegalArgumentException.class,
                 () -> new WinningNumberSet(6, new Lotto(List.of(1, 2, 3, 4, 5, 6))));
+    }
+
+    @DisplayName("알맞은 당첨 번호 문자열을 입력하면 정상적으로 리스트가 반환된다.")
+    @Test
+    void convertWinningNumberStringToListTest() {
+        assertThat(convertWinningNumberStringToList("1,2,3,4,5,6")).isEqualTo(List.of(1,2,3,4,5,6));
     }
 
 
