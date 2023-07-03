@@ -12,11 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static lotto.Controller.Controller.convertWinningNumberStringToList;
+import static lotto.Controller.Controller.getRateOfReturn;
 import static lotto.Controller.Controller.getWinningCount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -135,6 +138,18 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @DisplayName("총 점수가 집계되었을 때 수익률 계산이 잘 되는지 확인")
+    @Test
+    void getRateOfReturnTest() {
+        int testPurchaseLotteryCount = 5;
+        Map<Winning, Integer> testWinningScoreMap = new EnumMap<>(Winning.class);
+        for (Winning winning : Winning.values()) {
+            testWinningScoreMap.put(winning, 0);
+        }
+        testWinningScoreMap.put(Winning.THREE_WINNING, 1);
+        testWinningScoreMap.put(Winning.FIVE_WINNING, 1);
+        assertThat(getRateOfReturn(testPurchaseLotteryCount, testWinningScoreMap)).isEqualTo("30100.0");
+    }
 
     @Test
     void 기능_테스트() {
