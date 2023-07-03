@@ -1,19 +1,22 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import lotto.Domain.BonusNumber;
+import lotto.Domain.PurchasePrice;
+import lotto.Domain.WinningNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
-import static lotto.Application.*;
+import static lotto.Controller.Controller.getWinningCount;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ApplicationTest extends NsTest {
@@ -34,11 +37,11 @@ class ApplicationTest extends NsTest {
     @ParameterizedTest
     void occurredErrorWhenPurchasePriceTypedIncorrectly(String testPurchasePrice) {
         assertThrows(IllegalArgumentException.class,
-                () -> validatePurchasePrice(testPurchasePrice));
+                () -> new PurchasePrice(testPurchasePrice));
     }
 
     @DisplayName("당첨 번호를 형식에 맞지 않게 입력하면 [ERROR] 메시지가 출력된다.")
-    @ValueSource(strings = {"1, 2, 3, 4, 5, 6", "d,d,d,d,d,d"})
+    @ValueSource(strings = {"1, 2, 3, 4, 5, 6", "d,d,d,d,d,d", "1.2.3.4.5.6"})
     @ParameterizedTest
     void outputErrorWhenWinningNumbersTypedIncorrectly(String testWinningNumbers) {
         assertSimpleTest(() -> {
@@ -48,43 +51,52 @@ class ApplicationTest extends NsTest {
     }
 
     @DisplayName("당첨 번호를 형식에 맞지 않게 입력하면 예외가 발생한다.")
-    @ValueSource(strings = {"1, 2, 3, 4, 5, 6", "d,d,d,d,d,d"})
+    @ValueSource(strings = {"1, 2, 3, 4, 5, 6", "d,d,d,d,d,d", "1.2.3.4.5.6"})
     @ParameterizedTest
     void occurredErrorWhenWinningNumbersTypedIncorrectly(String testWinningNumbers) {
         assertThrows(IllegalArgumentException.class,
-                () -> validateWinningNumbersFormat(testWinningNumbers));
+                () -> new WinningNumber(testWinningNumbers));
     }
 
-    @DisplayName("번호가 범위를 넘으면 예외가 발생한다.")
-    @ValueSource(ints = {0, 46})
+    @DisplayName("보너스 번호를 형식에 맞지 않게 입력하면 [ERROR] 메시지가 출력된다.")
+    @ValueSource(strings = {"0", "46", "h", "0h"})
     @ParameterizedTest
-    void createNumberByOverRange(int testNumber) {
-        assertThrows(IllegalArgumentException.class,
-                () -> validateNumberRange(testNumber));
-    }
-
-    @DisplayName("숫자가 이미 리스트에 포함되어 있다면 예외가 발생한다.")
-    @Test
-    void validateDuplicateNumberTest() {
-        List<Integer> testWinningNumbersList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
-        assertThrows(IllegalArgumentException.class,
-                () -> validateDuplicateNumber(testWinningNumbersList, 6));
-    }
-
-    @DisplayName("당첨 숫자의 수는 반드시 6개여야 한다.")
-    @ValueSource(ints = {1, 2, 3, 4, 5, 7})
-    @ParameterizedTest
-    void validateWinningNumbersSizeTest(int testSize) {
-        assertThrows(IllegalArgumentException.class,
-                () -> validateWinningNumbersSize(testSize));
+    void createNumberByOverRange(String testNumber) {
+        assertSimpleTest(() -> {
+            runException("1000", "1,2,3,4,5,6", testNumber);
+            assertThat(output()).contains(ERROR_MESSAGE);
+        });
     }
 
     @DisplayName("보너스 번호를 형식에 맞지 않게 입력하면 예외가 발생한다.")
-    @ValueSource(strings = {"h", ""})
+    @ValueSource(strings = {"0", "46", "h", "0h"})
     @ParameterizedTest
-    void validateBonusNumberFormatTest(String testBonusNumber) {
+    void createNumberByOverRange2(String testNumber) {
         assertThrows(IllegalArgumentException.class,
-                () -> validateWinningNumbersFormat(testBonusNumber));
+                () -> new BonusNumber(testNumber));
+    }
+
+//    @DisplayName("숫자가 이미 리스트에 포함되어 있다면 예외가 발생한다.")
+//    @Test
+//    void validateDuplicateNumberTest() {
+//        List<Integer> testWinningNumbersList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
+//        assertThrows(IllegalArgumentException.class,
+//                () -> validateDuplicateNumber(testWinningNumbersList, 6));
+//    }
+//
+
+    @DisplayName("당첨 숫자와 로또를 비교하여 일치하는 숫자를 제대로 찾는지 확인")
+    @Test
+    void getWinningCountTest() {
+        assertAll(
+                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(7, 8, 9, 10, 11, 12, 13)), 0),
+                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 7, 8, 9, 10, 11, 12)), 1),
+                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 7, 8, 9, 10, 11)), 2),
+                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 7, 8, 9, 10)), 3),
+                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 4, 7, 8, 9)), 4),
+                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 4, 5, 7, 8)), 5),
+                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 4, 5, 6, 7)), 6)
+        );
     }
 
     @Test
