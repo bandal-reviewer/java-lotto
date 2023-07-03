@@ -25,7 +25,7 @@ class ApplicationTest extends NsTest {
     @DisplayName("구입금액을 형식에 맞지 않게 입력하면 [ERROR] 메시지가 출력된다.")
     @ValueSource(strings = {"1000h", "1001"})
     @ParameterizedTest
-    void outputErrorWhenPurchasePriceTypedIncorrectly(String testPurchasePrice) {
+    void readPurchasePriceTest1(String testPurchasePrice) {
         assertSimpleTest(() -> {
             runException(testPurchasePrice);
             assertThat(output()).contains(ERROR_MESSAGE);
@@ -35,9 +35,16 @@ class ApplicationTest extends NsTest {
     @DisplayName("구입금액을 형식에 맞지 않게 입력하면 예외가 발생한다.")
     @ValueSource(strings = {"1000h", "1001"})
     @ParameterizedTest
-    void occurredErrorWhenPurchasePriceTypedIncorrectly(String testPurchasePrice) {
+    void readPurchasePriceTest2(String testPurchasePrice) {
         assertThrows(IllegalArgumentException.class,
                 () -> new PurchasePrice(testPurchasePrice));
+    }
+
+    @DisplayName("구입금액은 1,000에 나누어 떨어지는 수이다.")
+    @Test
+    void generatePurchaseLotteryCountTest() {
+        PurchasePrice purchasePrice = new PurchasePrice("54000");
+        assertThat(purchasePrice.getPrice() % 1000).isEqualTo(0);
     }
 
     @DisplayName("당첨 번호를 형식에 맞지 않게 입력하면 [ERROR] 메시지가 출력된다.")
