@@ -2,8 +2,10 @@ package lotto;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 import lotto.Domain.BonusNumber;
+import lotto.Domain.Lotto;
 import lotto.Domain.PurchasePrice;
 import lotto.Domain.WinningNumber;
+import lotto.Domain.WinningNumberSet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -50,7 +52,7 @@ class ApplicationTest extends NsTest {
     @DisplayName("당첨 번호를 형식에 맞지 않게 입력하면 [ERROR] 메시지가 출력된다.")
     @ValueSource(strings = {"1, 2, 3, 4, 5, 6", "d,d,d,d,d,d", "1.2.3.4.5.6"})
     @ParameterizedTest
-    void outputErrorWhenWinningNumbersTypedIncorrectly(String testWinningNumbers) {
+    void generateWinningNumbersTest1(String testWinningNumbers) {
         assertSimpleTest(() -> {
             runException(testWinningNumbers);
             assertThat(output()).contains(ERROR_MESSAGE);
@@ -60,7 +62,7 @@ class ApplicationTest extends NsTest {
     @DisplayName("당첨 번호를 형식에 맞지 않게 입력하면 예외가 발생한다.")
     @ValueSource(strings = {"1, 2, 3, 4, 5, 6", "d,d,d,d,d,d", "1.2.3.4.5.6"})
     @ParameterizedTest
-    void occurredErrorWhenWinningNumbersTypedIncorrectly(String testWinningNumbers) {
+    void generateWinningNumbersTest2(String testWinningNumbers) {
         assertThrows(IllegalArgumentException.class,
                 () -> new WinningNumber(testWinningNumbers));
     }
@@ -68,7 +70,7 @@ class ApplicationTest extends NsTest {
     @DisplayName("보너스 번호를 형식에 맞지 않게 입력하면 [ERROR] 메시지가 출력된다.")
     @ValueSource(strings = {"0", "46", "h", "0h"})
     @ParameterizedTest
-    void createNumberByOverRange(String testNumber) {
+    void generateBonusNumberTest1(String testNumber) {
         assertSimpleTest(() -> {
             runException("1000", "1,2,3,4,5,6", testNumber);
             assertThat(output()).contains(ERROR_MESSAGE);
@@ -78,19 +80,18 @@ class ApplicationTest extends NsTest {
     @DisplayName("보너스 번호를 형식에 맞지 않게 입력하면 예외가 발생한다.")
     @ValueSource(strings = {"0", "46", "h", "0h"})
     @ParameterizedTest
-    void createNumberByOverRange2(String testNumber) {
+    void generateBonusNumberTest2(String testNumber) {
         assertThrows(IllegalArgumentException.class,
                 () -> new BonusNumber(testNumber));
     }
 
-//    @DisplayName("숫자가 이미 리스트에 포함되어 있다면 예외가 발생한다.")
-//    @Test
-//    void validateDuplicateNumberTest() {
-//        List<Integer> testWinningNumbersList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
-//        assertThrows(IllegalArgumentException.class,
-//                () -> validateDuplicateNumber(testWinningNumbersList, 6));
-//    }
-//
+    @DisplayName("보너스 번호가 이미 당첨 번호에 포함되어 있다면 예외가 발생한다.")
+    @Test
+    void generateWinningNumberSetTest() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new WinningNumberSet(6, new Lotto(List.of(1, 2, 3, 4, 5, 6))));
+    }
+
 
     @DisplayName("당첨 숫자와 로또를 비교하여 일치하는 숫자를 제대로 찾는지 확인")
     @Test
