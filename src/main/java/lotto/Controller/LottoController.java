@@ -2,7 +2,7 @@ package lotto.Controller;
 
 import lotto.Domain.BonusNumber;
 import lotto.Domain.Lotto;
-import lotto.Domain.LottoNumbers;
+import lotto.Domain.RandomNumbers;
 import lotto.Domain.PurchasePrice;
 import lotto.Domain.Winning;
 import lotto.Domain.WinningNumber;
@@ -51,7 +51,7 @@ public class LottoController {
     }
 
     public static List<Integer> generateRandomNumberList() {
-        LottoNumbers lottoNumbers = new LottoNumbers();
+        RandomNumbers lottoNumbers = new RandomNumbers();
         return lottoNumbers.getRandomNumberList();
     }
 
