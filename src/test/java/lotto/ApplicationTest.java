@@ -127,14 +127,14 @@ class ApplicationTest extends NsTest {
                 () -> assertEquals(Winning.getRightWinningScore(1, false), Winning.NO_WINNING),
                 () -> assertEquals(Winning.getRightWinningScore(2, true), Winning.NO_WINNING),
                 () -> assertEquals(Winning.getRightWinningScore(2, false), Winning.NO_WINNING),
-                () -> assertEquals(Winning.getRightWinningScore(3, true), Winning.THREE_WINNING),
-                () -> assertEquals(Winning.getRightWinningScore(3, false), Winning.THREE_WINNING),
-                () -> assertEquals(Winning.getRightWinningScore(4, true), Winning.FOUR_WINNING),
-                () -> assertEquals(Winning.getRightWinningScore(4, false), Winning.FOUR_WINNING),
-                () -> assertEquals(Winning.getRightWinningScore(5, true), Winning.FIVE_WINNING),
-                () -> assertEquals(Winning.getRightWinningScore(5, false), Winning.FIVE_WINNING),
-                () -> assertEquals(Winning.getRightWinningScore(6, true), Winning.FIVE_AND_BONUS_WINNING),
-                () -> assertEquals(Winning.getRightWinningScore(6, false), Winning.SIX_WINNING)
+                () -> assertEquals(Winning.getRightWinningScore(3, true), Winning.FIFTH),
+                () -> assertEquals(Winning.getRightWinningScore(3, false), Winning.FIFTH),
+                () -> assertEquals(Winning.getRightWinningScore(4, true), Winning.FOURTH),
+                () -> assertEquals(Winning.getRightWinningScore(4, false), Winning.FOURTH),
+                () -> assertEquals(Winning.getRightWinningScore(5, true), Winning.THIRD),
+                () -> assertEquals(Winning.getRightWinningScore(5, false), Winning.THIRD),
+                () -> assertEquals(Winning.getRightWinningScore(6, true), Winning.SECOND),
+                () -> assertEquals(Winning.getRightWinningScore(6, false), Winning.FIFTH)
         );
     }
 
@@ -146,8 +146,8 @@ class ApplicationTest extends NsTest {
         for (Winning winning : Winning.values()) {
             testWinningScoreMap.put(winning, 0);
         }
-        testWinningScoreMap.put(Winning.THREE_WINNING, 1);
-        testWinningScoreMap.put(Winning.FIVE_WINNING, 1);
+        testWinningScoreMap.put(Winning.FIFTH, 1);
+        testWinningScoreMap.put(Winning.THIRD, 1);
         assertThat(getRateOfReturn(testPurchaseLotteryCount, testWinningScoreMap)).isEqualTo("30100.0");
     }
 
