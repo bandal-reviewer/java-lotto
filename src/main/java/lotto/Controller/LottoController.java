@@ -15,7 +15,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class Controller {
+public class LottoController {
     public void run() {
         try {
             startLotto();

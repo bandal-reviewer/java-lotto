@@ -18,9 +18,9 @@ import java.util.Map;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
-import static lotto.Controller.Controller.convertWinningNumberStringToList;
-import static lotto.Controller.Controller.getRateOfReturn;
-import static lotto.Controller.Controller.getWinningCount;
+import static lotto.Controller.LottoController.convertWinningNumberStringToList;
+import static lotto.Controller.LottoController.getRateOfReturn;
+import static lotto.Controller.LottoController.getWinningCount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
