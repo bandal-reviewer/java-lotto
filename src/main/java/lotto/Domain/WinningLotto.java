@@ -6,17 +6,17 @@ import java.util.List;
 
 public class WinningLotto {
     private final int bonusNumber;
-    private final Lotto numbersList;
+    private final Lotto winningLotto;
 
-    public WinningLotto(int bonusNumber, Lotto numbersList) {
-        validate(bonusNumber, numbersList);
-        numbersList.getNumbers().add(bonusNumber);
+    public WinningLotto(int bonusNumber, Lotto winningLotto) {
+        validate(bonusNumber, winningLotto);
+        winningLotto.getNumbers().add(bonusNumber);
         this.bonusNumber = bonusNumber;
-        this.numbersList = numbersList;
+        this.winningLotto = winningLotto;
     }
 
-    private void validate(int bonusNumber, Lotto numbersList) {
-        if (numbersList.getNumbers().contains(bonusNumber)) {
+    private void validate(int bonusNumber, Lotto winningLotto) {
+        if (winningLotto.getNumbers().contains(bonusNumber)) {
             Output.outputNumberDuplicate();
             throw new IllegalArgumentException();
         }
@@ -26,7 +26,7 @@ public class WinningLotto {
         return bonusNumber;
     }
 
-    public List<Integer> getNumbersList() {
-        return numbersList.getNumbers();
+    public List<Integer> getWinningLotto() {
+        return winningLotto.getNumbers();
     }
 }

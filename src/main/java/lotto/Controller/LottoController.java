@@ -106,7 +106,7 @@ public class LottoController {
             List<Integer> lotteryNumbers = lottery.getNumbers();
 
             boolean hasBonusNum = lotteryNumbers.contains(winningNumberSet.getBonusNumber());
-            int winningCount = getWinningCount(lotteryNumbers, winningNumberSet.getNumbersList());
+            int winningCount = getWinningCount(lotteryNumbers, winningNumberSet.getWinningLotto());
 
             Winning winning = Winning.getRightWinningScore(winningCount, hasBonusNum);
             winningScoreMap.put(winning, winningScoreMap.get(winning) + 1);
