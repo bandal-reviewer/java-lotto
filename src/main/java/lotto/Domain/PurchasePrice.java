@@ -4,11 +4,11 @@ import static lotto.UI.Output.outputPurchasePriceDivide;
 import static lotto.UI.Output.outputPurchasePriceInteger;
 
 public class PurchasePrice {
-    private final String price;
+    private final int purchasePrice;
 
-    public PurchasePrice(String price) {
-        validate(price);
-        this.price = price;
+    public PurchasePrice(String purchasePrice) {
+        validate(purchasePrice);
+        this.purchasePrice = Integer.parseInt(purchasePrice);
     }
 
     private void validate(String price) {
@@ -24,6 +24,6 @@ public class PurchasePrice {
     }
 
     public int getPrice() {
-        return Integer.parseInt(price);
+        return purchasePrice;
     }
 }
