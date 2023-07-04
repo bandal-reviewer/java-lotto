@@ -6,7 +6,7 @@ import lotto.Domain.RandomNumbers;
 import lotto.Domain.PurchasePrice;
 import lotto.Domain.Winning;
 import lotto.Domain.WinningNumber;
-import lotto.Domain.WinningNumberSet;
+import lotto.Domain.WinningLotto;
 import lotto.UI.Input;
 import lotto.UI.Output;
 
@@ -28,7 +28,7 @@ public class LottoController {
         Output.printPurchaseLotteryCount(purchaseLotteryCount);
         Lotto[] lotteries = getLotteryTickets(purchaseLotteryCount);
 
-        WinningNumberSet winningNumberSet = readWinningNumbers();
+        WinningLotto winningNumberSet = readWinningNumbers();
         setGameOver(purchaseLotteryCount, lotteries, winningNumberSet);
     }
 
@@ -55,7 +55,7 @@ public class LottoController {
         return lottoNumbers.getRandomNumberList();
     }
 
-    public static WinningNumberSet readWinningNumbers() {
+    public static WinningLotto readWinningNumbers() {
         WinningNumber winningNumber = new WinningNumber(Input.inputWinningNumbers());
         Lotto winningNumbersList
                 = new Lotto(convertWinningNumberStringToList(winningNumber.getNumbers()));
@@ -63,7 +63,7 @@ public class LottoController {
         BonusNumber bonusNumber = new BonusNumber(Input.inputBonusNumber());
         int integerTypeBonusNumber = bonusNumber.getBonusNumber();
 
-        return new WinningNumberSet(integerTypeBonusNumber, winningNumbersList);
+        return new WinningLotto(integerTypeBonusNumber, winningNumbersList);
     }
 
     public static List<Integer> convertWinningNumberStringToList(String numbers) {
@@ -78,7 +78,7 @@ public class LottoController {
     public static void setGameOver(
             int purchaseLotteryCount,
             Lotto[] lotteries,
-            WinningNumberSet winningNumberSet
+            WinningLotto winningNumberSet
     ) {
         Map<Winning, Integer> winningScoreMap = getWinningScoreMap(lotteries, winningNumberSet);
         String rateOfReturn = getRateOfReturn(purchaseLotteryCount, winningScoreMap);
@@ -87,7 +87,7 @@ public class LottoController {
 
     public static Map<Winning, Integer> getWinningScoreMap(
             Lotto[] lotteries,
-            WinningNumberSet winningNumberSet
+            WinningLotto winningNumberSet
     ) {
         Map<Winning, Integer> winningScoreMap = new EnumMap<>(Winning.class);
         for (Winning winning : Winning.values()) {
@@ -99,7 +99,7 @@ public class LottoController {
 
     public static void saveWinningScore(
             Lotto[] lotteries,
-            WinningNumberSet winningNumberSet,
+            WinningLotto winningNumberSet,
             Map<Winning, Integer> winningScoreMap
     ) {
         for (Lotto lottery : lotteries) {

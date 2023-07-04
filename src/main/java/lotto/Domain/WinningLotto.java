@@ -4,11 +4,11 @@ import lotto.UI.Output;
 
 import java.util.List;
 
-public class WinningNumberSet {
+public class WinningLotto {
     private final int bonusNumber;
     private final Lotto numbersList;
 
-    public WinningNumberSet(int bonusNumber, Lotto numbersList) {
+    public WinningLotto(int bonusNumber, Lotto numbersList) {
         validate(bonusNumber, numbersList);
         numbersList.getNumbers().add(bonusNumber);
         this.bonusNumber = bonusNumber;

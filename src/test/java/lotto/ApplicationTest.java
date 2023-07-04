@@ -6,7 +6,7 @@ import lotto.Domain.Lotto;
 import lotto.Domain.PurchasePrice;
 import lotto.Domain.Winning;
 import lotto.Domain.WinningNumber;
-import lotto.Domain.WinningNumberSet;
+import lotto.Domain.WinningLotto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -94,7 +94,7 @@ class ApplicationTest extends NsTest {
     @Test
     void generateWinningNumberSetTest() {
         assertThrows(IllegalArgumentException.class,
-                () -> new WinningNumberSet(6, new Lotto(List.of(1, 2, 3, 4, 5, 6))));
+                () -> new WinningLotto(6, new Lotto(List.of(1, 2, 3, 4, 5, 6))));
     }
 
     @DisplayName("알맞은 당첨 번호 문자열을 입력하면 정상적으로 리스트가 반환된다.")
