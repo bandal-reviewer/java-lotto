@@ -26,4 +26,8 @@ public class PurchasePrice {
     public int getPrice() {
         return purchasePrice;
     }
+
+    public int getPurchaseLotteryCount() {
+        return purchasePrice / 1000;
+    }
 }

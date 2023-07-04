@@ -33,12 +33,12 @@ public class Controller {
     }
 
     public static int generatePurchaseLotteryCount() {
-        return readPurchasePrice() / 1000;
+        PurchasePrice purchasePrice = readPurchasePrice();
+        return purchasePrice.getPurchaseLotteryCount();
     }
 
-    public static int readPurchasePrice() {
-        PurchasePrice purchasePrice = new PurchasePrice(Input.inputPurchasePrice());
-        return purchasePrice.getPrice();
+    public static PurchasePrice readPurchasePrice() {
+        return new PurchasePrice(Input.inputPurchasePrice());
     }
 
     public static Lotto[] getLotteryTickets(int purchaseLotteryCount) {
