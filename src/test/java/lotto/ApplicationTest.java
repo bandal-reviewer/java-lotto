@@ -1,7 +1,6 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
-import lotto.Domain.BonusNumber;
 import lotto.Domain.Lotto;
 import lotto.Domain.LottoNumber;
 import lotto.Domain.PurchasePrice;
@@ -84,11 +83,11 @@ class ApplicationTest extends NsTest {
     }
 
     @DisplayName("보너스 번호를 형식에 맞지 않게 입력하면 예외가 발생한다.")
-    @ValueSource(strings = {"0", "46", "h", "0h"})
+    @ValueSource(ints = {0, 46})
     @ParameterizedTest
-    void generateBonusNumberTest2(String testNumber) {
+    void generateBonusNumberTest2(int testNumber) {
         assertThrows(IllegalArgumentException.class,
-                () -> new BonusNumber(testNumber));
+                () -> new LottoNumber(testNumber));
     }
 
     @DisplayName("보너스 번호가 이미 당첨 번호에 포함되어 있다면 예외가 발생한다.")
