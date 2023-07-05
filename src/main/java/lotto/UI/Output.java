@@ -18,12 +18,20 @@ public class Output {
         System.out.println(lotteryCount + PURCHASE_LOTTERY);
     }
 
+    public static void printLotteryNumbers(List<Integer> lotteryNumbers) {
+        System.out.println(lotteryNumbers);
+    }
+
     public static void printResultView() {
         System.out.println(RESULT_VIEW);
     }
 
     public static void printWinningScore(int correctCount, String winningPrize, int winningScore, Winning winning) {
-        System.out.println(getCorrectCount(correctCount, winning) + "개 일치" + getBonusCorrectString(winning) + "(" + winningPrize  + "원) - " + winningScore + "개");
+        System.out.println(getCorrectCount(correctCount, winning) + "개 일치"
+                + getBonusCorrectString(winning)
+                + "(" + winningPrize  + "원) - "
+                + winningScore + "개"
+        );
     }
 
     public static int getCorrectCount(int correctCount, Winning winning) {
@@ -38,9 +46,5 @@ public class Output {
 
     public static void printRateOfReturn(String rateOfReturn) {
         System.out.println("총 수익률은 " + rateOfReturn + "%입니다.");
-    }
-
-    public static void printLotteryNumbers(List<Integer> lotteryNumbers) {
-        System.out.println(lotteryNumbers);
     }
 }
