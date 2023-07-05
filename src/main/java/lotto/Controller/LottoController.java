@@ -51,8 +51,7 @@ public class LottoController {
     }
 
     public static List<Integer> generateRandomNumberList() {
-        RandomNumbers lottoNumbers = new RandomNumbers();
-        return lottoNumbers.getRandomNumberList();
+        return RandomNumbers.getRandomNumberList();
     }
 
     public static WinningLotto readWinningNumbers() {
