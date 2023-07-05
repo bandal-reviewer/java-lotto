@@ -1,7 +1,5 @@
 package lotto.Domain;
 
-import lotto.UI.Output;
-
 import java.util.List;
 
 public class WinningLotto {
@@ -16,10 +14,8 @@ public class WinningLotto {
     }
 
     private void validate(int bonusNumber, Lotto winningLotto) {
-        if (winningLotto.getNumbers().contains(bonusNumber)) {
-            Output.outputNumberDuplicate();
-            throw new IllegalArgumentException();
-        }
+        if (winningLotto.getNumbers().contains(bonusNumber))
+            throw new IllegalArgumentException("[ERROR] 번호는 중복 숫자가 없어야 합니다.");
     }
 
     public int getBonusNumber() {

@@ -134,7 +134,7 @@ class ApplicationTest extends NsTest {
                 () -> assertEquals(Winning.getRightWinningScore(5, true), Winning.THIRD),
                 () -> assertEquals(Winning.getRightWinningScore(5, false), Winning.THIRD),
                 () -> assertEquals(Winning.getRightWinningScore(6, true), Winning.SECOND),
-                () -> assertEquals(Winning.getRightWinningScore(6, false), Winning.FIFTH)
+                () -> assertEquals(Winning.getRightWinningScore(6, false), Winning.FIRST)
         );
     }
 

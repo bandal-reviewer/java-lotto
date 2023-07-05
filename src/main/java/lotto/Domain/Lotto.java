@@ -1,7 +1,5 @@
 package lotto.Domain;
 
-import lotto.UI.Output;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,22 +17,17 @@ public class Lotto {
     }
 
     private void validate(List<Integer> numbers) {
-        if (numbers.size() != 6) {
-            Output.outputWinningNumbersSize();
-            throw new IllegalArgumentException();
-        }
+        if (numbers.size() != 6)
+            throw new IllegalArgumentException("[ERROR] 번호는 6개만 작성되어야 합니다.");
+
 
         HashSet<Integer> validateNumbersSet = new HashSet<>(numbers);
-        if (validateNumbersSet.size() != numbers.size()) {
-            Output.outputNumberDuplicate();
-            throw new IllegalArgumentException();
-        }
+        if (validateNumbersSet.size() != numbers.size())
+            throw new IllegalArgumentException("[ERROR] 번호는 중복 숫자가 없어야 합니다.");
 
         for (int number : numbers) {
-            if (number < MINIMUM_NUMBER_RANGE || number > MAXIMUM_NUMBER_RANGE) {
-                Output.outputNumberRange();
-                throw new IllegalArgumentException();
-            }
+            if (number < MINIMUM_NUMBER_RANGE || number > MAXIMUM_NUMBER_RANGE)
+                throw new IllegalArgumentException("[ERROR] 번호의 범위는 1부터 45까지여야 합니다.");
         }
     }
 

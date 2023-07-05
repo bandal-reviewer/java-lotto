@@ -19,7 +19,8 @@ public class LottoController {
     public void run() {
         try {
             startLotto();
-        } catch (IllegalArgumentException ignored) {
+        } catch (IllegalArgumentException exception) {
+            Output.printExceptionMessage(exception.getMessage());
         }
     }
 

@@ -1,8 +1,5 @@
 package lotto.Domain;
 
-import static lotto.UI.Output.outputPurchasePriceDivide;
-import static lotto.UI.Output.outputPurchasePriceInteger;
-
 public class PurchasePrice {
     private final int purchasePrice;
 
@@ -12,15 +9,11 @@ public class PurchasePrice {
     }
 
     private void validate(String price) {
-        if (!price.matches("[0-9]+")) {
-            outputPurchasePriceInteger();
-            throw new IllegalArgumentException();
-        }
+        if (!price.matches("[0-9]+"))
+            throw new IllegalArgumentException("[ERROR] 구입금액은 숫자로 입력해야 합니다.");
 
-        if (Integer.parseInt(price) % 1000 != 0) {
-            outputPurchasePriceDivide();
-            throw new IllegalArgumentException();
-        }
+        if (Integer.parseInt(price) % 1000 != 0)
+            throw new IllegalArgumentException("[ERROR] 구입금액은 1,000에 나누어 떨어지는 숫자여야 합니다.");
     }
 
     public int getPrice() {

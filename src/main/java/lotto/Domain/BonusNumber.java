@@ -1,7 +1,5 @@
 package lotto.Domain;
 
-import lotto.UI.Output;
-
 public class BonusNumber {
     private static final int MINIMUM_NUMBER_RANGE = 1;
     private static final int MAXIMUM_NUMBER_RANGE = 45;
@@ -12,16 +10,12 @@ public class BonusNumber {
     }
 
     private void validate(String bonusNumber) {
-        if (!bonusNumber.matches("[0-9]+")) {
-            Output.outputBonusNumberFormat();
-            throw new IllegalArgumentException();
-        }
+        if (!bonusNumber.matches("[0-9]+"))
+            throw new IllegalArgumentException("[ERROR] 보너스 번호는 숫자로 입력해야 합니다.");
 
         if (Integer.parseInt(bonusNumber) < MINIMUM_NUMBER_RANGE
-                || Integer.parseInt(bonusNumber) > MAXIMUM_NUMBER_RANGE) {
-            Output.outputNumberRange();
-            throw new IllegalArgumentException();
-        }
+                || Integer.parseInt(bonusNumber) > MAXIMUM_NUMBER_RANGE)
+            throw new IllegalArgumentException("[ERROR] 번호의 범위는 1부터 45까지여야 합니다.");
     }
 
     public int getBonusNumber() {
