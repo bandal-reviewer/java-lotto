@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class Lotto {
     private static final int MINIMUM_NUMBER_RANGE = 1;
     private static final int MAXIMUM_NUMBER_RANGE = 45;
+    private static final int LOTTERY_PRICE = 1000;
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
@@ -33,5 +34,9 @@ public class Lotto {
 
     public List<Integer> getNumbers() {
         return numbers;
+    }
+
+    public static int getPurchaseLotteryCount(int purchasePrice) {
+        return purchasePrice / LOTTERY_PRICE;
     }
 }

@@ -35,7 +35,7 @@ public class LottoController {
 
     public static int generatePurchaseLotteryCount() {
         PurchasePrice purchasePrice = readPurchasePrice();
-        return purchasePrice.getPurchaseLotteryCount();
+        return Lotto.getPurchaseLotteryCount(purchasePrice.getPrice());
     }
 
     public static PurchasePrice readPurchasePrice() {
