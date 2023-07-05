@@ -3,13 +3,13 @@ package lotto.Domain;
 import java.util.List;
 
 public class WinningLotto {
-    private final int bonusNumber;
+    private final LottoNumber bonusNumber;
     private final Lotto winningLotto;
 
     public WinningLotto(int bonusNumber, Lotto winningLotto) {
         validate(bonusNumber, winningLotto);
         winningLotto.getNumbers().add(bonusNumber);
-        this.bonusNumber = bonusNumber;
+        this.bonusNumber = new LottoNumber(bonusNumber);
         this.winningLotto = winningLotto;
     }
 
@@ -19,7 +19,7 @@ public class WinningLotto {
     }
 
     public int getBonusNumber() {
-        return bonusNumber;
+        return bonusNumber.mapToInt();
     }
 
     public List<Integer> getWinningLotto() {
