@@ -5,8 +5,9 @@ import lotto.Domain.BonusNumber;
 import lotto.Domain.Lotto;
 import lotto.Domain.PurchasePrice;
 import lotto.Domain.Winning;
-import lotto.Domain.WinningNumber;
 import lotto.Domain.WinningLotto;
+import lotto.Domain.WinningNumber;
+import lotto.UI.Input;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +19,6 @@ import java.util.Map;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
-import static lotto.Controller.LottoController.convertWinningNumberStringToList;
 import static lotto.Controller.LottoController.getRateOfReturn;
 import static lotto.Controller.LottoController.getWinningCount;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -100,7 +100,7 @@ class ApplicationTest extends NsTest {
     @DisplayName("알맞은 당첨 번호 문자열을 입력하면 정상적으로 리스트가 반환된다.")
     @Test
     void convertWinningNumberStringToListTest() {
-        assertThat(convertWinningNumberStringToList("1,2,3,4,5,6")).isEqualTo(List.of(1,2,3,4,5,6));
+        assertThat(Input.convertStringToNumList("1,2,3,4,5,6")).isEqualTo(List.of(1,2,3,4,5,6));
     }
 
 
