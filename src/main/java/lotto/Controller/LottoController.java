@@ -5,12 +5,10 @@ import lotto.Domain.LottoNumber;
 import lotto.Domain.RandomNumbers;
 import lotto.Domain.PurchasePrice;
 import lotto.Domain.Winning;
-import lotto.Domain.WinningNumber;
 import lotto.Domain.WinningLotto;
 import lotto.UI.Input;
 import lotto.UI.Output;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -59,24 +57,14 @@ public class LottoController {
 
     public static WinningLotto readWinningNumbers() {
         Output.outputWinningNumbers();
-        WinningNumber winningNumber = new WinningNumber(Input.inputWinningNumbers());
         Lotto winningNumbersList
-                = new Lotto(convertWinningNumberStringToList(winningNumber.getNumbers()));
+                = new Lotto(Input.inputWinningNumbers());
 
         Output.outputBonusNumber();
         LottoNumber bonusNumber = new LottoNumber(Input.inputBonusNumber());
         int integerTypeBonusNumber = bonusNumber.mapToInt();
 
         return new WinningLotto(integerTypeBonusNumber, winningNumbersList);
-    }
-
-    public static List<Integer> convertWinningNumberStringToList(String numbers) {
-        List<Integer> numbersList = new ArrayList<>();
-        for (String number : numbers.split(",")) {
-            int num = Integer.parseInt(number);
-            numbersList.add(num);
-        }
-        return numbersList;
     }
 
     public static void calculateResult(
