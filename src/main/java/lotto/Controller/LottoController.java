@@ -56,14 +56,12 @@ public class LottoController {
 
     public static WinningLotto readWinningNumbers() {
         Output.outputWinningNumbers();
-        Lotto winningNumbersList
-                = new Lotto(Input.inputWinningNumbers());
+        Lotto winningNumbersList = new Lotto(Input.inputWinningNumbers());
 
         Output.outputBonusNumber();
         LottoNumber bonusNumber = new LottoNumber(Input.inputBonusNumber());
-        int integerTypeBonusNumber = bonusNumber.mapToInt();
 
-        return new WinningLotto(integerTypeBonusNumber, winningNumbersList);
+        return new WinningLotto(bonusNumber, winningNumbersList);
     }
 
     public static void calculateResult(
