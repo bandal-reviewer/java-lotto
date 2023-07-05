@@ -40,9 +40,9 @@ class ApplicationTest extends NsTest {
     }
 
     @DisplayName("구입금액을 형식에 맞지 않게 입력하면 예외가 발생한다.")
-    @ValueSource(strings = {"1000h", "1001"})
+    @ValueSource(ints = {1001, 999, 0})
     @ParameterizedTest
-    void readPurchasePriceTest2(String testPurchasePrice) {
+    void readPurchasePriceTest2(int testPurchasePrice) {
         assertThrows(IllegalArgumentException.class,
                 () -> new PurchasePrice(testPurchasePrice));
     }
@@ -50,7 +50,7 @@ class ApplicationTest extends NsTest {
     @DisplayName("구입금액은 1,000에 나누어 떨어지는 수이다.")
     @Test
     void generatePurchaseLotteryCountTest() {
-        PurchasePrice purchasePrice = new PurchasePrice("54000");
+        PurchasePrice purchasePrice = new PurchasePrice(54000);
         assertThat(purchasePrice.getPrice() % 1000).isEqualTo(0);
     }
 
