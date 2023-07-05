@@ -39,6 +39,7 @@ public class LottoController {
     }
 
     public static PurchasePrice readPurchasePrice() {
+        Output.outputPurchasePrice();
         return new PurchasePrice(Input.inputPurchasePrice());
     }
 
@@ -57,10 +58,12 @@ public class LottoController {
     }
 
     public static WinningLotto readWinningNumbers() {
+        Output.outputWinningNumbers();
         WinningNumber winningNumber = new WinningNumber(Input.inputWinningNumbers());
         Lotto winningNumbersList
                 = new Lotto(convertWinningNumberStringToList(winningNumber.getNumbers()));
 
+        Output.outputBonusNumber();
         LottoNumber bonusNumber = new LottoNumber(Input.inputBonusNumber());
         int integerTypeBonusNumber = bonusNumber.mapToInt();
 
