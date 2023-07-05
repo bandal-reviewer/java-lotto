@@ -6,7 +6,6 @@ import lotto.Domain.LottoNumber;
 import lotto.Domain.PurchasePrice;
 import lotto.Domain.Winning;
 import lotto.Domain.WinningLotto;
-import lotto.Domain.WinningNumber;
 import lotto.UI.Input;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,7 +68,7 @@ class ApplicationTest extends NsTest {
     @ParameterizedTest
     void generateWinningNumbersTest2(String testWinningNumbers) {
         assertThrows(IllegalArgumentException.class,
-                () -> new WinningNumber(testWinningNumbers));
+                () -> Input.validateInputStringFormat(testWinningNumbers));
     }
 
     @DisplayName("보너스 번호를 형식에 맞지 않게 입력하면 [ERROR] 메시지가 출력된다.")
