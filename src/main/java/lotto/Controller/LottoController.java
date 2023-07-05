@@ -30,7 +30,7 @@ public class LottoController {
         Lotto[] lotteries = getLotteryTickets(purchaseLotteryCount);
 
         WinningLotto winningNumberSet = readWinningNumbers();
-        setGameOver(purchaseLotteryCount, lotteries, winningNumberSet);
+        calculateResult(purchaseLotteryCount, lotteries, winningNumberSet);
     }
 
     public static int generatePurchaseLotteryCount() {
@@ -76,7 +76,7 @@ public class LottoController {
         return numbersList;
     }
 
-    public static void setGameOver(
+    public static void calculateResult(
             int purchaseLotteryCount,
             Lotto[] lotteries,
             WinningLotto winningNumberSet
