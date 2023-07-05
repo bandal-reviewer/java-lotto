@@ -3,6 +3,7 @@ package lotto;
 import camp.nextstep.edu.missionutils.test.NsTest;
 import lotto.Domain.BonusNumber;
 import lotto.Domain.Lotto;
+import lotto.Domain.LottoNumber;
 import lotto.Domain.PurchasePrice;
 import lotto.Domain.Winning;
 import lotto.Domain.WinningLotto;
@@ -94,7 +95,7 @@ class ApplicationTest extends NsTest {
     @Test
     void generateWinningNumberSetTest() {
         assertThrows(IllegalArgumentException.class,
-                () -> new WinningLotto(6, new Lotto(List.of(1, 2, 3, 4, 5, 6))));
+                () -> new WinningLotto(new LottoNumber(6), new Lotto(List.of(1, 2, 3, 4, 5, 6))));
     }
 
     @DisplayName("알맞은 당첨 번호 문자열을 입력하면 정상적으로 리스트가 반환된다.")
