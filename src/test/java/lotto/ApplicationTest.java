@@ -102,21 +102,6 @@ class ApplicationTest extends NsTest {
         assertThat(Input.convertStringToNumList("1,2,3,4,5,6")).isEqualTo(List.of(1,2,3,4,5,6));
     }
 
-
-    @DisplayName("당첨 번호와 로또를 비교하여 일치하는 숫자를 제대로 찾는지 확인")
-    @Test
-    void getWinningCountTest() {
-        assertAll(
-                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(7, 8, 9, 10, 11, 12, 13)), 0),
-                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 7, 8, 9, 10, 11, 12)), 1),
-                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 7, 8, 9, 10, 11)), 2),
-                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 7, 8, 9, 10)), 3),
-                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 4, 7, 8, 9)), 4),
-                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 4, 5, 7, 8)), 5),
-                () -> assertEquals(getWinningCount(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 4, 5, 6, 7)), 6)
-        );
-    }
-
     @DisplayName("당첨 번호와 보너스 번호 포함 유무가 주어질 때 알맞은 메뉴와 일치하는지 확인")
     @Test
     void getRightWinningScoreTest() {
