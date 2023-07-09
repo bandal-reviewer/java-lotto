@@ -59,7 +59,7 @@ public class LottoController {
         Lotto winningNumbersList = new Lotto(Input.inputWinningNumbers());
 
         Output.outputBonusNumber();
-        LottoNumberVO bonusNumber = new LottoNumberVO(Input.inputBonusNumber());
+        LottoNumberVO bonusNumber = LottoNumberVO.from(Input.inputBonusNumber());
 
         return new WinningLotto(bonusNumber, winningNumbersList);
     }
