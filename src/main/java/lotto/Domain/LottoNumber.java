@@ -1,5 +1,7 @@
 package lotto.Domain;
 
+import java.util.Objects;
+
 public class LottoNumber {
     private static final int MINIMUM_NUMBER_RANGE = 1;
     private static final int MAXIMUM_NUMBER_RANGE = 45;
@@ -19,5 +21,18 @@ public class LottoNumber {
 
     public int mapToInt() {
         return lottoNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LottoNumber lottoNumber = (LottoNumber) o;
+        return Objects.equals(this.lottoNumber, lottoNumber.lottoNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lottoNumber);
     }
 }
