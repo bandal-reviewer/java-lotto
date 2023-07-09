@@ -2,13 +2,13 @@ package lotto.Domain;
 
 import java.util.Objects;
 
-public class LottoNumber {
+public class LottoNumberVO {
     private static final int MINIMUM_NUMBER_RANGE = 1;
     private static final int MAXIMUM_NUMBER_RANGE = 45;
 
     private final int lottoNumber;
 
-    public LottoNumber(int lottoNumber) {
+    public LottoNumberVO(int lottoNumber) {
         validateRange(lottoNumber);
         this.lottoNumber = lottoNumber;
     }
@@ -27,7 +27,7 @@ public class LottoNumber {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LottoNumber lottoNumber = (LottoNumber) o;
+        LottoNumberVO lottoNumber = (LottoNumberVO) o;
         return Objects.equals(this.lottoNumber, lottoNumber.lottoNumber);
     }
 
