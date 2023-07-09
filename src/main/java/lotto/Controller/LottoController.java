@@ -1,8 +1,8 @@
 package lotto.Controller;
 
+import lotto.Domain.LotteryTickets;
 import lotto.Domain.Lotto;
 import lotto.Domain.LottoNumberVO;
-import lotto.Domain.RandomNumbers;
 import lotto.Domain.PurchasePrice;
 import lotto.Domain.Winning;
 import lotto.Domain.WinningLotto;
@@ -25,10 +25,12 @@ public class LottoController {
     public void startLotto() {
         int purchaseLotteryCount = generatePurchaseLotteryCount();
         Output.printPurchaseLotteryCount(purchaseLotteryCount);
-        Lotto[] lotteries = getLotteryTickets(purchaseLotteryCount);
+
+        LotteryTickets lotteryTickets = new LotteryTickets(purchaseLotteryCount);
+        Output.printLotteryTickets(lotteryTickets);
 
         WinningLotto winningNumberSet = readWinningNumbers();
-        calculateResult(purchaseLotteryCount, lotteries, winningNumberSet);
+        calculateResult(purchaseLotteryCount, lotteryTickets, winningNumberSet);
     }
 
     public static int generatePurchaseLotteryCount() {
@@ -39,19 +41,6 @@ public class LottoController {
     public static PurchasePrice readPurchasePrice() {
         Output.outputPurchasePrice();
         return new PurchasePrice(Input.inputPurchasePrice());
-    }
-
-    public static Lotto[] getLotteryTickets(int purchaseLotteryCount) {
-        Lotto[] lotteries = new Lotto[purchaseLotteryCount];
-        for (int i = 0; i < purchaseLotteryCount; i++) {
-            lotteries[i] = new Lotto(generateRandomNumberList());
-            Output.printLotteryNumbers(lotteries[i].getNumbers());
-        }
-        return lotteries;
-    }
-
-    public static List<Integer> generateRandomNumberList() {
-        return RandomNumbers.getRandomNumberList();
     }
 
     public static WinningLotto readWinningNumbers() {
@@ -66,32 +55,32 @@ public class LottoController {
 
     public static void calculateResult(
             int purchaseLotteryCount,
-            Lotto[] lotteries,
+            LotteryTickets lotteryTickets,
             WinningLotto winningNumberSet
     ) {
-        Map<Winning, Integer> winningScoreMap = getWinningScoreMap(lotteries, winningNumberSet);
+        Map<Winning, Integer> winningScoreMap = getWinningScoreMap(lotteryTickets, winningNumberSet);
         String rateOfReturn = getRateOfReturn(purchaseLotteryCount, winningScoreMap);
         Winning.printResult(winningScoreMap, rateOfReturn);
     }
 
     public static Map<Winning, Integer> getWinningScoreMap(
-            Lotto[] lotteries,
+            LotteryTickets lotteryTickets,
             WinningLotto winningNumberSet
     ) {
         Map<Winning, Integer> winningScoreMap = new EnumMap<>(Winning.class);
         for (Winning winning : Winning.values()) {
             winningScoreMap.put(winning, 0);
         }
-        saveWinningScore(lotteries, winningNumberSet, winningScoreMap);
+        saveWinningScore(lotteryTickets, winningNumberSet, winningScoreMap);
         return winningScoreMap;
     }
 
     public static void saveWinningScore(
-            Lotto[] lotteries,
+            LotteryTickets lotteryTickets,
             WinningLotto winningNumberSet,
             Map<Winning, Integer> winningScoreMap
     ) {
-        for (Lotto lottery : lotteries) {
+        for (Lotto lottery : lotteryTickets.getLotteryTickets()) {
             List<LottoNumberVO> lotteryNumbers = lottery.getNumbers();
 
             boolean hasBonusNum = hasBonusNumber(lotteryNumbers, winningNumberSet.getBonusNumber());

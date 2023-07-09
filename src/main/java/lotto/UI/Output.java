@@ -1,5 +1,7 @@
 package lotto.UI;
 
+import lotto.Domain.LotteryTickets;
+import lotto.Domain.Lotto;
 import lotto.Domain.LottoNumberVO;
 import lotto.Domain.Winning;
 
@@ -20,8 +22,10 @@ public class Output {
         System.out.println(lotteryCount + PURCHASE_LOTTERY);
     }
 
-    public static void printLotteryNumbers(List<LottoNumberVO> lotteryNumbers) {
-        System.out.println(convertLottoNumberToInt(lotteryNumbers));
+    public static void printLotteryTickets(LotteryTickets lotteryTickets) {
+        for (Lotto lotto : lotteryTickets.getLotteryTickets()) {
+            System.out.println(convertLottoNumberToInt(lotto.getNumbers()));
+        }
     }
 
     public static List<Integer> convertLottoNumberToInt(List<LottoNumberVO> lotteryNumbers) {
