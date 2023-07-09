@@ -29,8 +29,8 @@ public class LottoController {
         LotteryTickets lotteryTickets = new LotteryTickets(purchaseLotteryCount);
         Output.printLotteryTickets(lotteryTickets);
 
-        WinningLotto winningNumberSet = readWinningNumbers();
-        calculateResult(purchaseLotteryCount, lotteryTickets, winningNumberSet);
+        WinningLotto winningLotto = readWinningNumbers();
+        calculateResult(purchaseLotteryCount, lotteryTickets, winningLotto);
     }
 
     public static int generatePurchaseLotteryCount() {
@@ -56,35 +56,35 @@ public class LottoController {
     public static void calculateResult(
             int purchaseLotteryCount,
             LotteryTickets lotteryTickets,
-            WinningLotto winningNumberSet
+            WinningLotto winningLotto
     ) {
-        Map<Winning, Integer> winningScoreMap = getWinningScoreMap(lotteryTickets, winningNumberSet);
+        Map<Winning, Integer> winningScoreMap = getWinningScoreMap(lotteryTickets, winningLotto);
         String rateOfReturn = getRateOfReturn(purchaseLotteryCount, winningScoreMap);
         Winning.printResult(winningScoreMap, rateOfReturn);
     }
 
     public static Map<Winning, Integer> getWinningScoreMap(
             LotteryTickets lotteryTickets,
-            WinningLotto winningNumberSet
+            WinningLotto winningLotto
     ) {
         Map<Winning, Integer> winningScoreMap = new EnumMap<>(Winning.class);
         for (Winning winning : Winning.values()) {
             winningScoreMap.put(winning, 0);
         }
-        saveWinningScore(lotteryTickets, winningNumberSet, winningScoreMap);
+        saveWinningScore(lotteryTickets, winningLotto, winningScoreMap);
         return winningScoreMap;
     }
 
     public static void saveWinningScore(
             LotteryTickets lotteryTickets,
-            WinningLotto winningNumberSet,
+            WinningLotto winningLotto,
             Map<Winning, Integer> winningScoreMap
     ) {
         for (Lotto lottery : lotteryTickets.getLotteryTickets()) {
             List<LottoNumberVO> lotteryNumbers = lottery.getNumbers();
 
-            boolean hasBonusNum = hasBonusNumber(lotteryNumbers, winningNumberSet.getBonusNumber());
-            int winningCount = getWinningCount(lotteryNumbers, winningNumberSet.getWinningLotto());
+            boolean hasBonusNum = hasBonusNumber(lotteryNumbers, winningLotto.getBonusNumber());
+            int winningCount = getWinningCount(lotteryNumbers, winningLotto.getWinningLotto());
 
             Winning winning = Winning.getRightWinningScore(winningCount, hasBonusNum);
             winningScoreMap.put(winning, winningScoreMap.get(winning) + 1);
