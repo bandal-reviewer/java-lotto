@@ -92,9 +92,9 @@ public class LottoController {
             Map<Winning, Integer> winningScoreMap
     ) {
         for (Lotto lottery : lotteries) {
-            List<Integer> lotteryNumbers = lottery.getNumbers();
+            List<LottoNumberVO> lotteryNumbers = lottery.getNumbers();
 
-            boolean hasBonusNum = lotteryNumbers.contains(winningNumberSet.getBonusNumber());
+            boolean hasBonusNum = hasBonusNumber(lotteryNumbers, winningNumberSet.getBonusNumber());
             int winningCount = getWinningCount(lotteryNumbers, winningNumberSet.getWinningLotto());
 
             Winning winning = Winning.getRightWinningScore(winningCount, hasBonusNum);
@@ -102,12 +102,22 @@ public class LottoController {
         }
     }
 
+    public static boolean hasBonusNumber(
+            List<LottoNumberVO> lotteryNumbers,
+            LottoNumberVO bonusNumber
+    ) {
+        for (LottoNumberVO lotteryNumber : lotteryNumbers) {
+            if (bonusNumber.equals(lotteryNumber)) return true;
+        }
+        return false;
+    }
+
     public static int getWinningCount(
-            List<Integer> lotteryNumbers,
-            List<Integer> winningNumbersList
+            List<LottoNumberVO> lotteryNumbers,
+            List<LottoNumberVO> winningNumbersList
     ) {
         int winningCount = 0;
-        for (int lotteryNum : lotteryNumbers) {
+        for (LottoNumberVO lotteryNum : lotteryNumbers) {
             if (winningNumbersList.contains(lotteryNum)) winningCount++;
         }
         return winningCount;

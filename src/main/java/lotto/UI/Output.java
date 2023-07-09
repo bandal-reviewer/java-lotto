@@ -1,8 +1,10 @@
 package lotto.UI;
 
+import lotto.Domain.LottoNumberVO;
 import lotto.Domain.Winning;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Output {
     private static final String PURCHASE_LOTTERY = "개를 구매했습니다.";
@@ -18,8 +20,14 @@ public class Output {
         System.out.println(lotteryCount + PURCHASE_LOTTERY);
     }
 
-    public static void printLotteryNumbers(List<Integer> lotteryNumbers) {
-        System.out.println(lotteryNumbers);
+    public static void printLotteryNumbers(List<LottoNumberVO> lotteryNumbers) {
+        System.out.println(convertLottoNumberToInt(lotteryNumbers));
+    }
+
+    public static List<Integer> convertLottoNumberToInt(List<LottoNumberVO> lotteryNumbers) {
+        return lotteryNumbers.stream()
+                .map(LottoNumberVO::mapToInt)
+                .collect(Collectors.toList());
     }
 
     public static void printResultView() {

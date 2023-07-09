@@ -15,19 +15,19 @@ public class WinningLotto {
     }
 
     private void validateDuplicate(LottoNumberVO bonusNumber, Lotto winningLotto) {
-        if (winningLotto.getNumbers().contains(bonusNumber.mapToInt()))
+        if (winningLotto.getNumbers().contains(bonusNumber))
             throw new IllegalArgumentException("[ERROR] 번호는 중복 숫자가 없어야 합니다.");
     }
 
     private void addBonusNumberInWinningLotto(LottoNumberVO bonusNumber, Lotto winningLotto) {
-        winningLotto.getNumbers().add(bonusNumber.mapToInt());
+        winningLotto.getNumbers().add(bonusNumber);
     }
 
-    public int getBonusNumber() {
-        return bonusNumber.mapToInt();
+    public LottoNumberVO getBonusNumber() {
+        return bonusNumber;
     }
 
-    public List<Integer> getWinningLotto() {
+    public List<LottoNumberVO> getWinningLotto() {
         return winningLotto.getNumbers();
     }
 }
