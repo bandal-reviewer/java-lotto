@@ -29,7 +29,7 @@ public class Output {
     public static void printWinningScore(int correctCount, String winningPrize, int winningScore, Winning winning) {
         System.out.println(getCorrectCount(correctCount, winning) + "개 일치"
                 + getBonusCorrectString(winning)
-                + "(" + winningPrize  + "원) - "
+                + "(" + winningPrize + "원) - "
                 + winningScore + "개"
         );
     }

@@ -27,7 +27,7 @@ public class LottoNumberVO {
         return lottoNumber;
     }
 
-    public static LottoNumberVO from (int lottoNumber) {
+    public static LottoNumberVO from(int lottoNumber) {
         if (lottoNumberVOCache.containsKey(lottoNumber))
             return lottoNumberVOCache.get(lottoNumber);
         else {
